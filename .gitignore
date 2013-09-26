@@ -1,2 +1,2 @@
-build-webots/*
-src/interfaces/cpp/*
+player/build-webots/*
+player/src/interfaces/cpp/*

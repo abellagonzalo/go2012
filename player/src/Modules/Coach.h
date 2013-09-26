@@ -68,7 +68,7 @@
 #include "RecorderSession.h"
 #include "PlayerSession.h"
 
-#include "demencia/AleatoryMoveComponent.h"
+// #include "demencia/AleatoryMoveComponent.h"
 
 #include "NaoServerCamera.h"
 #include "NaoServerMotors.h"
@@ -200,7 +200,7 @@ private:
 	ALSensorsProxy *psensors;
 	ALSonarProxy *psonar;
 
-	AleatoryMoveComponent *aleatoryMoveComponent;
+	// AleatoryMoveComponent *aleatoryMoveComponent;
 
 	pthread_t tIceServer;
 

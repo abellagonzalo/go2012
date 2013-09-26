@@ -92,7 +92,7 @@ ALModule(pBroker, pName) {
 	robotusdetector = RobotUSDetector::getInstance();
 	recorderSession = RecorderSession::getInstance();
 	playerSession = PlayerSession::getInstance();
-	aleatoryMoveComponent = AleatoryMoveComponent::getInstance();
+	// aleatoryMoveComponent = AleatoryMoveComponent::getInstance();
 
 	leds->init("Leds", getParentBroker());
 	matchPlayer->init("MatchPlayer", getParentBroker());
@@ -151,7 +151,7 @@ ALModule(pBroker, pName) {
 	serverpose3dencoders->init("NaoServerPose3DEncoders", getParentBroker());
 	sensorrecordernao->init("SensorRecorderNao", getParentBroker());
 
-	aleatoryMoveComponent->init("AleatoryMoveComponent", getParentBroker());
+	// aleatoryMoveComponent->init("AleatoryMoveComponent", getParentBroker());
 
 
 	//csched = new CascadeScheduler();
@@ -390,7 +390,7 @@ void* Coach::iceServerThread(void *obj)
 		adapter->add(NaoServerPose3DMotors::getInstance(), ic->stringToIdentity("Pose3DMotors"));
 		adapter->add(NaoServerPose3DEncoders::getInstance(), ic->stringToIdentity("Pose3DEncoders"));
 
-		adapter->add(AleatoryMoveComponent::getInstance(), ic->stringToIdentity("AleatoryMoveManager"));
+		// adapter->add(AleatoryMoveComponent::getInstance(), ic->stringToIdentity("AleatoryMoveManager"));
 
 		adapter->activate();
 		ic->waitForShutdown();

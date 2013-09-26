@@ -20,6 +20,8 @@ option(WEBOTS
   OFF
 )
 
+add_definitions(" -m32 ")
+
 # Generar los ficheros de Bica y las adaptaciones de Bica para 
 # JdeRobot. Los ficheros se crean los respectivos directorios
 # en src/interfaces/cpp/ .
@@ -213,7 +215,7 @@ src/Components/RobotUSDetector.cpp src/Components/RobotUSDetector.h
 src/Components/WorldState.cpp src/Components/WorldState.h
 src/Components/RecorderSession.cpp src/Components/RecorderSession.h
 src/Components/PlayerSession.cpp src/Components/PlayerSession.h
-src/Components/demencia/AleatoryMoveComponent.cpp src/Components/demencia/AleatoryMoveComponent.h
+#src/Components/demencia/AleatoryMoveComponent.cpp src/Components/demencia/AleatoryMoveComponent.h
 src/motions/forwardKick.cpp
 src/motions/forwardDribble.cpp
 src/motions/forwardStrong.cpp
