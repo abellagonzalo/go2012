@@ -1,0 +1,12 @@
+<component id="Recorder">
+<conf autorestart="0"/>
+	<dependenceComponent id="GoalDetector" x="364.0" y="370.0"/>
+	<dependenceComponent id="GTLocalization" x="694.0" y="372.0"/>
+	<state id="initial" x="325.0" y="75.0" code="Initial_state_code" >
+	</state>
+	<state id="Record" x="546.0" y="181.0" code="Record_state_code">
+		<requirement id="GoalDetector"/>
+		<requirement id="GTLocalization"/>
+	</state>
+	<transition id="Initial2Record0" x="484.5" y="139.0" code="Initial2Record0_transition_code" source="Initial" target="Record" priority="1" timer="false"/>
+</component>

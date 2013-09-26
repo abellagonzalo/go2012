@@ -1,0 +1,23 @@
+<component id="Movie">
+	<dependenceComponent id="Body" x="96.0" y="154.0"/>
+	<dependenceComponent id="Music" x="174.0" y="317.0"/>
+	<dependenceComponent id="TextSpeech" x="300.0" y="437.0"/>
+	<state id="initial" x="0.0" y="0.0" code="Initial_state_code" >
+	</state>
+	<state id="setFileMovie" x="231.0" y="20.0" code="setFileMovie_state_code">
+	</state>
+	<state id="Running" x="497.0" y="18.0" code="Running_state_code">
+		<modulation id="Body"/>
+		<modulation id="Music"/>
+		<modulation id="TextSpeech"/>
+	</state>
+	<state id="Waiting" x="583.0" y="298.0" code="Waiting_state_code">
+		<requirement id="TextSpeech"/>
+		<requirement id="Music"/>
+		<requirement id="Body"/>
+	</state>
+	<transition id="Initial2setFileMovie0" x="161.5" y="56.0" code="Initial2setFileMovie0_transition_code" source="Initial" target="setFileMovie" priority="1" timer="false"/>
+	<transition id="setFileMovie2Running0" x="410.0" y="65.0" code="setFileMovie2Running0_transition_code" source="setFileMovie" target="Running" priority="1" timer="false"/>
+	<transition id="Running2Waiting0" x="605.0" y="169.0" code="Running2Waiting0_transition_code" source="Running" target="Waiting" priority="1" timer="false"/>
+	<transition id="Waiting2Running0" x="517.0" y="186.0" code="Waiting2Running0_transition_code" source="Waiting" target="Running" priority="1" timer="false"/>
+</component>

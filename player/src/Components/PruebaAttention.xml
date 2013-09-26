@@ -1,0 +1,21 @@
+<component id="PruebaAttention">
+<conf autorestart="0"/>
+	<dependenceComponent id="BallDetector" x="366.0" y="283.0"/>
+	<dependenceComponent id="Attention" x="107.0" y="374.0"/>
+	<dependenceComponent id="Body" x="465.0" y="371.0"/>
+	<dependenceComponent id="W3DDetector" x="289.0" y="379.0"/>
+	<state id="initial" x="0.0" y="0.0" code="Initial_state_code" >
+	</state>
+	<state id="Paso1" x="230.0" y="28.0" code="Paso1_state_code">
+		<requirement id="W3DDetector"/>
+		<modulation id="Attention"/>
+	</state>
+	<state id="paso2" x="553.0" y="31.0" code="paso2_state_code">
+		<requirement id="BallDetector"/>
+		<modulation id="Body"/>
+		<modulation id="Attention"/>
+	</state>
+	<transition id="Initial2Visualizando0" x="123.5" y="89.5" code="Initial2Visualizando0_transition_code" source="Initial" target="Paso1" priority="1" timer="false"/>
+	<transition id="Paso12paso20" x="407.0" y="33.5" code="Paso12paso20_transition_code" source="Paso1" target="paso2" priority="1" timer="true"/>
+	<transition id="paso22Paso10" x="418.5" y="102.5" code="paso22Paso10_transition_code" source="paso2" target="Paso1" priority="1" timer="true"/>
+</component>

@@ -1,0 +1,12 @@
+<component id="Music">
+<conf autorestart="0"/>
+	<state id="initial" x="4.0" y="4.0" code="Initial_state_code" >
+	</state>
+	<state id="Ready" x="230.0" y="7.0" code="Ready_state_code">
+	</state>
+	<state id="Playing" x="252.0" y="234.0" code="Playing_state_code">
+	</state>
+	<transition id="Initial2Ready0" x="163.0" y="51.5" code="Initial2Ready0_transition_code" source="Initial" target="Ready" priority="1" timer="false"/>
+	<transition id="Ready2Playing0" x="275.5" y="161.5" code="Ready2Playing0_transition_code" source="Ready" target="Playing" priority="1" timer="false"/>
+	<transition id="Playing2Initial0" x="116.0" y="187.0" code="Playing2Initial0_transition_code" source="Playing" target="Initial" priority="3" timer="false"/>
+</component>

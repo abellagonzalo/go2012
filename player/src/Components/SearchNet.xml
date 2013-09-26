@@ -1,0 +1,14 @@
+<component id="SearchNet">
+<conf autorestart="0"/>
+	<dependenceComponent id="Attention" x="114.0" y="251.0"/>
+	<dependenceComponent id="Localization" x="377.0" y="209.0"/>
+	<dependenceComponent id="GoalDetector" x="562.0" y="219.0"/>
+	<state id="initial" x="168.0" y="17.0" code="Initial_state_code" >
+	</state>
+	<state id="StateS" x="380.0" y="9.0" code="StateS_state_code">
+		<requirement id="Localization"/>
+		<requirement id="GoalDetector"/>
+		<modulation id="Attention"/>
+	</state>
+	<transition id="Initial2StateS0" x="320.0" y="59.0" code="Initial2StateS0_transition_code" source="Initial" target="StateS" priority="1" timer="false"/>
+</component>

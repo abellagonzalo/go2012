@@ -1,0 +1,18 @@
+<component id="pruebag2gpos">
+<conf autorestart="0"/>
+	<dependenceComponent id="Go2gpos" x="278.0" y="309.0"/>
+	<dependenceComponent id="Localization" x="454.0" y="62.0"/>
+	<dependenceComponent id="GoalDetector" x="460.0" y="167.0"/>
+	<dependenceComponent id="Body" x="210.0" y="-2.0"/>
+	<dependenceComponent id="Attention" x="76.0" y="318.0"/>
+	<state id="initial" x="13.0" y="122.0" code="Initial_state_code" >
+	</state>
+	<state id="Going" x="253.0" y="98.0" code="Going_state_code">
+		<requirement id="Localization"/>
+		<requirement id="GoalDetector"/>
+		<modulation id="Go2gpos"/>
+		<modulation id="Body"/>
+		<modulation id="Attention"/>
+	</state>
+	<transition id="Initial2Going0" x="166.5" y="144.5" code="Initial2Going0_transition_code" source="Initial" target="Going" priority="1" timer="false"/>
+</component>

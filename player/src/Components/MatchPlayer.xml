@@ -1,0 +1,70 @@
+<component id="MatchPlayer">
+<conf autorestart="0"/>
+	<dependenceComponent id="Attention" x="-2.0" y="289.0"/>
+	<dependenceComponent id="GoalDetector" x="180.0" y="468.0"/>
+	<dependenceComponent id="BallDetector" x="84.0" y="488.0"/>
+	<dependenceComponent id="Body" x="267.0" y="483.0"/>
+	<dependenceComponent id="Head" x="470.0" y="489.0"/>
+	<dependenceComponent id="Go2gpos" x="370.0" y="478.0"/>
+	<dependenceComponent id="AuxRole" x="583.0" y="282.0"/>
+	<dependenceComponent id="AuxPenalty" x="689.0" y="376.0"/>
+	<dependenceComponent id="WorldState" x="11.0" y="391.0"/>
+	<dependenceComponent id="Localization" x="0.0" y="52.0"/>
+	<state id="initial" x="322.0" y="0.0" code="Initial_state_code" >
+	</state>
+	<state id="Initial_GS" x="71.0" y="132.0" code="Initial_GS_state_code">
+		<requirement id="Localization"/>
+		<modulation id="Body"/>
+		<modulation id="Head"/>
+	</state>
+	<state id="Ready_GS" x="208.0" y="172.0" code="Ready_GS_state_code">
+		<requirement id="GoalDetector"/>
+		<requirement id="BallDetector"/>
+		<requirement id="WorldState"/>
+		<requirement id="Localization"/>
+		<modulation id="Attention"/>
+		<modulation id="Body"/>
+		<modulation id="Go2gpos"/>
+	</state>
+	<state id="Set_GS" x="481.0" y="130.0" code="Set_GS_state_code">
+		<requirement id="GoalDetector"/>
+		<requirement id="BallDetector"/>
+		<requirement id="WorldState"/>
+		<requirement id="Localization"/>
+		<modulation id="Attention"/>
+		<modulation id="Body"/>
+	</state>
+	<state id="Playing_GS" x="586.0" y="134.0" code="Playing_GS_state_code">
+		<requirement id="Localization"/>
+		<modulation id="AuxRole"/>
+	</state>
+	<state id="Penalty_GS" x="637.0" y="502.0" code="Penalty_GS_state_code">
+		<requirement id="Localization"/>
+		<modulation id="AuxPenalty"/>
+	</state>
+	<state id="Penalised" x="439.0" y="339.0" code="Penalised_state_code">
+		<requirement id="Localization"/>
+		<modulation id="Head"/>
+		<modulation id="Body"/>
+	</state>
+	<state id="Finished_GS" x="693.0" y="75.0" code="Finished_GS_state_code">
+		<requirement id="Localization"/>
+		<modulation id="Body"/>
+		<modulation id="Head"/>
+	</state>
+	<transition id="Initial_GS2Initial0" x="103.5" y="34.0" code="Initial_GS2Initial0_transition_code" source="Initial_GS" target="Initial" priority="1" timer="false"/>
+	<transition id="Initial2Initial_GS0" x="171.5" y="75.0" code="Initial2Initial_GS0_transition_code" source="Initial" target="Initial_GS" priority="1" timer="false"/>
+	<transition id="Ready_GS2Initial0" x="340.5" y="144.5" code="Ready_GS2Initial0_transition_code" source="Ready_GS" target="Initial" priority="1" timer="false"/>
+	<transition id="Set_GS2Initial0" x="459.0" y="99.5" code="Set_GS2Initial0_transition_code" source="Set_GS" target="Initial" priority="1" timer="false"/>
+	<transition id="Playing_GS2Initial0" x="552.0" y="81.0" code="Playing_GS2Initial0_transition_code" source="Playing_GS" target="Initial" priority="1" timer="false"/>
+	<transition id="Penalty_GS2Initial0" x="562.0" y="454.0" code="Penalty_GS2Initial0_transition_code" source="Penalty_GS" target="Initial" priority="1" timer="false"/>
+	<transition id="Initial2Ready_GS0" x="275.5" y="93.5" code="Initial2Ready_GS0_transition_code" source="Initial" target="Ready_GS" priority="2" timer="false"/>
+	<transition id="Initial2Set_GS0" x="428.0" y="115.5" code="Initial2Set_GS0_transition_code" source="Initial" target="Set_GS" priority="3" timer="false"/>
+	<transition id="Initial2Playing_GS0" x="619.5" y="29.5" code="Initial2Playing_GS0_transition_code" source="Initial" target="Playing_GS" priority="4" timer="false"/>
+	<transition id="Initial2Penalty_GS0" x="584.0" y="416.5" code="Initial2Penalty_GS0_transition_code" source="Initial" target="Penalty_GS" priority="5" timer="false"/>
+	<transition id="Initial_GS2Penalised1" x="349.0" y="291.0" code="Initial_GS2Penalised1_transition_code" source="Initial_GS" target="Penalised" priority="3" timer="false"/>
+	<transition id="Penalised2Playing_GS1" x="582.5" y="240.0" code="Penalised2Playing_GS1_transition_code" source="Penalised" target="Playing_GS" priority="1" timer="false"/>
+	<transition id="Playing_GS2Penalised1" x="683.5" y="247.0" code="Playing_GS2Penalised1_transition_code" source="Playing_GS" target="Penalised" priority="3" timer="false"/>
+	<transition id="Initial2Finished_GS0" x="709.5" y="11.5" code="Initial2Finished_GS0_transition_code" source="Initial" target="Finished_GS" priority="6" timer="false"/>
+	<transition id="Finished_GS2Initial0" x="651.5" y="54.5" code="Finished_GS2Initial0_transition_code" source="Finished_GS" target="Initial" priority="1" timer="false"/>
+</component>

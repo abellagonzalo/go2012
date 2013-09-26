@@ -1,0 +1,14 @@
+<component id="PlayerSession">
+<conf autorestart="0"/>
+	<dependenceComponent id="Localization" x="624.0" y="329.0"/>
+	<state id="initial" x="116.0" y="24.0" code="Initial_state_code" >
+	</state>
+	<state id="Play" x="624.0" y="181.0" code="Play_state_code">
+		<modulation id="Localization"/>
+	</state>
+	<state id="PreSession" x="436.0" y="25.0" code="PreSession_state_code">
+	</state>
+	<transition id="Initial2PreSession0" x="322.0" y="59.0" code="Initial2PreSession0_transition_code" source="Initial" target="PreSession" priority="2" timer="false"/>
+	<transition id="PreSession2Play0" x="469.0" y="214.0" code="PreSession2Play0_transition_code" source="PreSession" target="Play" priority="1" timer="false"/>
+	<transition id="Play2PreSession0" x="656.0" y="59.0" code="Play2PreSession0_transition_code" source="Play" target="PreSession" priority="1" timer="false"/>
+</component>

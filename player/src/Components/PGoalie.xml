@@ -1,0 +1,25 @@
+<component id="PGoalie">
+<conf autorestart="0"/>
+	<dependenceComponent id="BallDetector" x="92.0" y="376.0"/>
+	<dependenceComponent id="Attention" x="189.0" y="372.0"/>
+	<dependenceComponent id="Body" x="350.0" y="369.0"/>
+	<state id="initial" x="295.0" y="76.0" code="Initial_state_code" >
+	</state>
+	<state id="Esperar" x="100.0" y="224.0" code="Esperar_state_code">
+		<requirement id="BallDetector"/>
+		<modulation id="Attention"/>
+		<modulation id="Body"/>
+	</state>
+	<state id="Tirarse" x="353.0" y="227.0" code="Tirarse_state_code">
+		<modulation id="Body"/>
+	</state>
+	<state id="Levantarse" x="549.0" y="89.0" code="Levantarse_state_code">
+		<modulation id="Body"/>
+	</state>
+	<state id="Tirado" x="557.0" y="255.0" code="Tirado_state_code">
+	</state>
+	<transition id="Initial2Esperar0" x="238.5" y="194.5" code="Initial2Esperar0_transition_code" source="Initial" target="Esperar" priority="1" timer="false"/>
+	<transition id="Esperar2Tirarse0" x="264.5" y="263.0" code="Esperar2Tirarse0_transition_code" source="Esperar" target="Tirarse" priority="1" timer="false"/>
+	<transition id="Tirarse2Tirado0" x="469.5" y="272.5" code="Tirarse2Tirado0_transition_code" source="Tirarse" target="Tirado" priority="2" timer="false"/>
+	<transition id="Tirado2Levantarse0" x="599.0" y="218.0" code="Tirado2Levantarse0_transition_code" source="Tirado" target="Levantarse" priority="1" timer="true"/>
+</component>

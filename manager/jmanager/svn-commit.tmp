@@ -1,0 +1,9 @@
+Bibliotecas necesarias para la app de la Fundacion CIEN.
+
+--Esta línea y las que están debajo serán ignoradas--
+
+AM   lib/bluecove-gpl-2.1.0.jar
+AM   lib/motej-library-0.9.jar
+AM   lib/motej-extras-0.9.jar
+AM   lib/slf4j-api-1.6.1.jar
+AM   lib/bluecove-2.1.0.jar

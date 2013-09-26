@@ -1,0 +1,14 @@
+<component id="Go2gpos">
+<conf autorestart="0"/>
+	<dependenceComponent id="Go2pos" x="251.0" y="262.0"/>
+	<dependenceComponent id="Body" x="509.0" y="238.0"/>
+	<dependenceComponent id="WorldState" x="52.0" y="181.0"/>
+	<state id="initial" x="28.0" y="21.0" code="Initial_state_code" >
+	</state>
+	<state id="Go2Pos" x="247.0" y="2.0" code="Go2Pos_state_code">
+		<requirement id="WorldState"/>
+		<modulation id="Go2pos"/>
+		<modulation id="Body"/>
+	</state>
+	<transition id="InitiallyLocalized" x="166.5" y="42.0" code="InitiallyLocalized_transition_code" source="Initial" target="Go2Pos" priority="1" timer="false"/>
+</component>

@@ -1,0 +1,58 @@
+<component id="GameArbitrator">
+<conf autorestart="0"/>
+	<dependenceComponent id="Body" x="662.0" y="34.0"/>
+	<dependenceComponent id="Head" x="724.0" y="136.0"/>
+	<dependenceComponent id="Fallen" x="155.0" y="406.0"/>
+	<dependenceComponent id="Go2gpos" x="5.0" y="-1.0"/>
+	<dependenceComponent id="Striker" x="433.0" y="459.0"/>
+	<dependenceComponent id="Attention" x="-30.0" y="344.0"/>
+	<state id="initial" x="279.0" y="8.0" code="Initial_state_code" >
+		<requirement id="Fallen"/>
+		<modulation id="Body"/>
+		<modulation id="Head"/>
+	</state>
+	<state id="Penalished" x="674.0" y="367.0" code="Penalished_state_code">
+		<modulation id="Body"/>
+		<modulation id="Head"/>
+	</state>
+	<state id="Set" x="8.0" y="228.0" code="Set_state_code">
+		<requirement id="Fallen"/>
+		<modulation id="Body"/>
+		<modulation id="Go2gpos"/>
+		<modulation id="Attention"/>
+	</state>
+	<state id="Ready" x="144.0" y="223.0" code="Ready_state_code">
+		<requirement id="Fallen"/>
+		<modulation id="Body"/>
+		<modulation id="Attention"/>
+	</state>
+	<state id="Play" x="377.0" y="208.0" code="Play_state_code">
+		<requirement id="Fallen"/>
+		<modulation id="Body"/>
+		<modulation id="Striker"/>
+	</state>
+	<state id="Finish" x="548.0" y="171.0" code="Finish_state_code">
+		<modulation id="Body"/>
+		<modulation id="Head"/>
+	</state>
+	<state id="RecoveringFromFall" x="313.0" y="402.0" code="RecoveringFromFall_state_code">
+		<requirement id="Body"/>
+		<requirement id="Fallen"/>
+	</state>
+	<transition id="Finish2Initial0" x="456.0" y="154.5" code="Finish2Initial0_transition_code" source="Finish" target="Initial" priority="1" timer="false"/>
+	<transition id="Initial2Play0" x="392.0" y="159.5" code="Initial2Play0_transition_code" source="Initial" target="Play" priority="1" timer="false"/>
+	<transition id="Play2Initial0" x="357.0" y="171.5" code="Play2Initial0_transition_code" source="Play" target="Initial" priority="1" timer="false"/>
+	<transition id="Penalished2Initial0" x="510.5" y="242.0" code="Penalished2Initial0_transition_code" source="Penalished" target="Initial" priority="1" timer="false"/>
+	<transition id="Set2RecoveringFromFall0" x="206.5" y="361.0" code="Set2RecoveringFromFall0_transition_code" source="Set" target="RecoveringFromFall" priority="1" timer="false"/>
+	<transition id="RecoveringFromFall2Initial0" x="290.0" y="267.0" code="RecoveringFromFall2Initial0_transition_code" source="RecoveringFromFall" target="Initial" priority="1" timer="false"/>
+	<transition id="Set2Initial0" x="90.5" y="150.0" code="Set2Initial0_transition_code" source="Set" target="Initial" priority="2" timer="false"/>
+	<transition id="Initial2Ready0" x="205.0" y="158.0" code="Initial2Ready0_transition_code" source="Initial" target="Ready" priority="2" timer="false"/>
+	<transition id="Ready2Initial0" x="245.0" y="170.0" code="Ready2Initial0_transition_code" source="Ready" target="Initial" priority="2" timer="false"/>
+	<transition id="Play2Penalished0" x="479.0" y="364.5" code="Play2Penalished0_transition_code" source="Play" target="Penalished" priority="2" timer="false"/>
+	<transition id="Penalished2Play0" x="514.0" y="312.5" code="Penalished2Play0_transition_code" source="Penalished" target="Play" priority="2" timer="false"/>
+	<transition id="Ready2RecoveringFromFall0" x="257.5" y="340.5" code="Ready2RecoveringFromFall0_transition_code" source="Ready" target="RecoveringFromFall" priority="2" timer="false"/>
+	<transition id="Initial2Set0" x="54.0" y="138.5" code="Initial2Set0_transition_code" source="Initial" target="Set" priority="3" timer="false"/>
+	<transition id="Play2RecoveringFromFall0" x="393.5" y="350.5" code="Play2RecoveringFromFall0_transition_code" source="Play" target="RecoveringFromFall" priority="3" timer="false"/>
+	<transition id="Initial2Finish0" x="493.0" y="148.5" code="Initial2Finish0_transition_code" source="Initial" target="Finish" priority="4" timer="false"/>
+	<transition id="Initial2RecoveringFromFall0" x="325.0" y="276.0" code="Initial2RecoveringFromFall0_transition_code" source="Initial" target="RecoveringFromFall" priority="5" timer="false"/>
+</component>

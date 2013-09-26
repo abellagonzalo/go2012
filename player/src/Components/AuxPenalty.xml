@@ -1,0 +1,17 @@
+<component id="AuxPenalty">
+<conf autorestart="0"/>
+	<dependenceComponent id="PGoalie" x="178.0" y="399.0"/>
+	<dependenceComponent id="Striker2" x="471.0" y="392.0"/>
+	<state id="initial" x="323.0" y="73.0" code="Initial_state_code" >
+	</state>
+	<state id="Goalie" x="181.0" y="234.0" code="Goalie_state_code">
+		<modulation id="PGoalie"/>
+	</state>
+	<state id="Kicker" x="467.0" y="247.0" code="Kicker_state_code">
+		<modulation id="Striker2"/>
+	</state>
+	<transition id="Initial2Goalie0" x="241.0" y="181.5" code="Initial2Goalie0_transition_code" source="Initial" target="Goalie" priority="1" timer="false"/>
+	<transition id="Goalie2Initial0" x="298.0" y="199.5" code="Goalie2Initial0_transition_code" source="Goalie" target="Initial" priority="1" timer="false"/>
+	<transition id="Kicker2Initial0" x="402.0" y="218.0" code="Kicker2Initial0_transition_code" source="Kicker" target="Initial" priority="1" timer="false"/>
+	<transition id="Initial2Kicker0" x="437.0" y="180.0" code="Initial2Kicker0_transition_code" source="Initial" target="Kicker" priority="2" timer="false"/>
+</component>

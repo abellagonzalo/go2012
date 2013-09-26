@@ -1,0 +1,20 @@
+<component id="Kick">
+	<dependenceComponent id="BallDetector" x="3.0" y="198.0"/>
+	<dependenceComponent id="Kinematics" x="100.0" y="198.0"/>
+	<state id="initial" x="61.0" y="37.0" code="Initial_state_code" >
+		<requirement id="BallDetector"/>
+		<requirement id="Kinematics"/>
+	</state>
+	<state id="ReadyToKick" x="228.0" y="36.0" code="ReadyToKick_state_code">
+	</state>
+	<state id="Kicking" x="386.0" y="37.0" code="Kicking_state_code">
+	</state>
+	<state id="Recovering" x="528.0" y="39.0" code="Recovering_state_code">
+	</state>
+	<state id="Finished" x="672.0" y="35.0" code="Finished_state_code">
+	</state>
+	<transition id="Initial2ReadyToKick0" x="178.5" y="63.0" code="Initial2ReadyToKick0_transition_code" source="Initial" target="ReadyToKick" priority="1" timer="false"/>
+	<transition id="ReadyToKick2Kicking0" x="353.0" y="82.5" code="ReadyToKick2Kicking0_transition_code" source="ReadyToKick" target="Kicking" priority="1" timer="false"/>
+	<transition id="Kicking2Recovering0" x="503.0" y="84.0" code="Kicking2Recovering0_transition_code" source="Kicking" target="Recovering" priority="1" timer="false"/>
+	<transition id="Recovering2Finished0" x="646.0" y="83.0" code="Recovering2Finished0_transition_code" source="Recovering" target="Finished" priority="1" timer="false"/>
+</component>

@@ -1,0 +1,11 @@
+<component id="LedsControl">
+	<state id="initial" x="0.0" y="0.0" code="Initial_state_code" >
+	</state>
+	<state id="SetUpdate" x="189.0" y="3.0" code="SetUpdate_state_code">
+	</state>
+	<state id="Change" x="417.0" y="0.0" code="Change_state_code">
+	</state>
+	<transition id="Initial2SetUpdate0" x="140.5" y="47.5" code="Initial2SetUpdate0_transition_code" source="Initial" target="SetUpdate" priority="1" timer="false"/>
+	<transition id="SetUpdate2Change0" x="349.0" y="11.5" code="SetUpdate2Change0_transition_code" source="SetUpdate" target="Change" priority="1" timer="false"/>
+	<transition id="Change2SetUpdate0" x="337.0" y="88.5" code="Change2SetUpdate0_transition_code" source="Change" target="SetUpdate" priority="1" timer="false"/>
+</component>

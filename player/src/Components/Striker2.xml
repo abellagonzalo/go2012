@@ -1,0 +1,45 @@
+<component id="Striker2">
+<conf autorestart="0"/>
+	<dependenceComponent id="SearchBall" x="143.0" y="14.0"/>
+	<dependenceComponent id="BallDetector" x="276.0" y="17.0"/>
+	<dependenceComponent id="Attention" x="390.0" y="3.0"/>
+	<dependenceComponent id="ApproachBall" x="258.0" y="471.0"/>
+	<dependenceComponent id="WorldState" x="391.0" y="456.0"/>
+	<dependenceComponent id="GoalDetector" x="53.0" y="449.0"/>
+	<dependenceComponent id="Body" x="823.0" y="421.0"/>
+	<dependenceComponent id="Go2pos" x="611.0" y="47.0"/>
+	<state id="initial" x="7.0" y="9.0" code="Initial_state_code" >
+	</state>
+	<state id="SearchingBall" x="2.0" y="205.0" code="SearchingBall_state_code">
+		<requirement id="BallDetector"/>
+		<requirement id="WorldState"/>
+		<modulation id="SearchBall"/>
+		<modulation id="Attention"/>
+	</state>
+	<state id="Going2Ball" x="284.0" y="223.0" code="Going2Ball_state_code">
+		<requirement id="BallDetector"/>
+		<requirement id="WorldState"/>
+		<requirement id="GoalDetector"/>
+		<modulation id="Attention"/>
+		<modulation id="ApproachBall"/>
+	</state>
+	<state id="BallNear" x="552.0" y="204.0" code="BallNear_state_code">
+		<requirement id="BallDetector"/>
+		<requirement id="WorldState"/>
+		<modulation id="Attention"/>
+		<modulation id="Go2pos"/>
+	</state>
+	<state id="Shoot" x="791.0" y="210.0" code="Shoot_state_code">
+		<requirement id="BallDetector"/>
+		<modulation id="Body"/>
+		<modulation id="Attention"/>
+	</state>
+	<transition id="Initial2SearchingBall0" x="39.0" y="144.0" code="Initial2SearchingBall0_transition_code" source="Initial" target="SearchingBall" priority="1" timer="false"/>
+	<transition id="SearchingBall2Going2Ball0" x="157.5" y="201.5" code="SearchingBall2Going2Ball0_transition_code" source="SearchingBall" target="Going2Ball" priority="1" timer="false"/>
+	<transition id="Going2Ball2SearchingBall0" x="158.0" y="291.0" code="Going2Ball2SearchingBall0_transition_code" source="Going2Ball" target="SearchingBall" priority="1" timer="false"/>
+	<transition id="Going2Ball2BallNear0" x="479.0" y="282.5" code="Going2Ball2BallNear0_transition_code" source="Going2Ball" target="BallNear" priority="2" timer="false"/>
+	<transition id="BallNear2Going2Ball0" x="456.0" y="204.5" code="BallNear2Going2Ball0_transition_code" source="BallNear" target="Going2Ball" priority="1" timer="false"/>
+	<transition id="BallNear2Shoot0" x="696.5" y="313.5" code="BallNear2Shoot0_transition_code" source="BallNear" target="Shoot" priority="2" timer="false"/>
+	<transition id="Shoot2BallNear0" x="694.0" y="215.5" code="Shoot2BallNear0_transition_code" source="Shoot" target="BallNear" priority="1" timer="true"/>
+	<transition id="BallNear2SearchingBall0" x="368.0" y="141.5" code="BallNear2SearchingBall0_transition_code" source="BallNear" target="SearchingBall" priority="3" timer="false"/>
+</component>

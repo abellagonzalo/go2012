@@ -1,0 +1,42 @@
+<component id="Stratego">
+<conf autorestart="0"/>
+	<dependenceComponent id="StrategyRoles" x="348.0" y="319.0"/>
+	<dependenceComponent id="Go2gpos" x="521.0" y="8.0"/>
+	<dependenceComponent id="Body" x="707.0" y="134.0"/>
+	<dependenceComponent id="Attention" x="537.0" y="157.0"/>
+	<dependenceComponent id="BallDetector" x="629.0" y="49.0"/>
+	<dependenceComponent id="Striker2" x="181.0" y="482.0"/>
+	<state id="initial" x="16.0" y="-10.0" code="Initial_state_code" >
+	</state>
+	<state id="StrikerRol" x="20.0" y="340.0" code="StrikerRol_state_code">
+		<requirement id="StrategyRoles"/>
+		<modulation id="Striker2"/>
+	</state>
+	<state id="AttackerRol" x="705.0" y="344.0" code="AttackerRol_state_code">
+		<requirement id="StrategyRoles"/>
+		<requirement id="BallDetector"/>
+		<modulation id="Body"/>
+		<modulation id="Attention"/>
+		<modulation id="Go2gpos"/>
+	</state>
+	<state id="DefenderRol" x="388.0" y="73.0" code="DefenderRol_state_code">
+		<requirement id="StrategyRoles"/>
+		<requirement id="BallDetector"/>
+		<modulation id="Go2gpos"/>
+		<modulation id="Body"/>
+		<modulation id="Attention"/>
+	</state>
+	<state id="RealInitial" x="155.0" y="10.0" code="RealInitial_state_code">
+		<requirement id="StrategyRoles"/>
+	</state>
+	<transition id="StrikerRol2DefenderRol0" x="202.5" y="168.0" code="StrikerRol2DefenderRol0_transition_code" source="StrikerRol" target="DefenderRol" priority="1" timer="false"/>
+	<transition id="DefenderRol2StrikerRol0" x="222.5" y="209.0" code="DefenderRol2StrikerRol0_transition_code" source="DefenderRol" target="StrikerRol" priority="1" timer="false"/>
+	<transition id="AttackerRol2StrikerRol0" x="394.5" y="464.5" code="AttackerRol2StrikerRol0_transition_code" source="AttackerRol" target="StrikerRol" priority="1" timer="false"/>
+	<transition id="StrikerRol2AttackerRol0" x="394.0" y="513.5" code="StrikerRol2AttackerRol0_transition_code" source="StrikerRol" target="AttackerRol" priority="2" timer="false"/>
+	<transition id="DefenderRol2AttackerRol0" x="491.5" y="301.5" code="DefenderRol2AttackerRol0_transition_code" source="DefenderRol" target="AttackerRol" priority="2" timer="false"/>
+	<transition id="AttackerRol2DefenderRol0" x="540.5" y="258.0" code="AttackerRol2DefenderRol0_transition_code" source="AttackerRol" target="DefenderRol" priority="2" timer="false"/>
+	<transition id="RealInitial2StrikerRol0" x="79.5" y="196.5" code="RealInitial2StrikerRol0_transition_code" source="RealInitial" target="StrikerRol" priority="1" timer="false"/>
+	<transition id="RealInitial2AttackerRol0" x="358.5" y="211.5" code="RealInitial2AttackerRol0_transition_code" source="RealInitial" target="AttackerRol" priority="2" timer="false"/>
+	<transition id="RealInitial2DefenderRol0" x="325.0" y="59.0" code="RealInitial2DefenderRol0_transition_code" source="RealInitial" target="DefenderRol" priority="3" timer="false"/>
+	<transition id="Initial2RealInitial0" x="54.0" y="116.5" code="Initial2RealInitial0_transition_code" source="Initial" target="RealInitial" priority="1" timer="false"/>
+</component>

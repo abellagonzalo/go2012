@@ -1,0 +1,19 @@
+<component id="FollowBall">
+<conf autorestart="0"/>
+	<dependenceComponent id="BallDetector" x="0.0" y="162.0"/>
+	<dependenceComponent id="Body" x="639.0" y="135.0"/>
+	<state id="initial" x="0.0" y="0.0" code="Initial_state_code" >
+	</state>
+	<state id="NotSeeingBall" x="233.0" y="2.0" code="NotSeeingBall_state_code">
+		<requirement id="BallDetector"/>
+		<modulation id="Body"/>
+	</state>
+	<state id="SeeingBall" x="251.0" y="292.0" code="SeeingBall_state_code">
+		<requirement id="BallDetector"/>
+		<modulation id="Body"/>
+	</state>
+	<transition id="BallInitiallyNotSeen" x="144.5" y="34.0" code="BallInitiallyNotSeen_transition_code" source="Initial" target="NotSeeingBall" priority="1" timer="false"/>
+	<transition id="BallInitiallySeen" x="167.0" y="174.0" code="BallInitiallySeen_transition_code" source="Initial" target="SeeingBall" priority="2" timer="false"/>
+	<transition id="BallLost" x="372.5" y="175.0" code="BallLost_transition_code" source="SeeingBall" target="NotSeeingBall" priority="1" timer="false"/>
+	<transition id="BallFound" x="269.5" y="176.0" code="BallFound_transition_code" source="NotSeeingBall" target="SeeingBall" priority="1" timer="false"/>
+</component>

@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <Properties>
+    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[330, 250]"/>
+    </Property>
+    <Property name="name" type="java.lang.String" value="Form" noResource="true"/>
+    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[330, 250]"/>
+    </Property>
+  </Properties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="2"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace min="-2" pref="296" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jButtonStop" min="-2" pref="73" max="-2" attributes="1"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButtonPoseInit" min="-2" pref="134" max="-2" attributes="1"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="VSlider" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="LSlider" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jButtondoMove" min="-2" max="-2" attributes="1"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="jTextFieldMove" pref="154" max="32767" attributes="1"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jButtonFreq" min="-2" max="-2" attributes="1"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jTextFieldFreq" min="-2" max="-2" attributes="1"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jButtonLK" alignment="0" max="32767" attributes="1"/>
+                                          <Component id="jButtonLK1" pref="115" max="32767" attributes="1"/>
+                                          <Component id="jButtonLK2" alignment="0" pref="115" max="32767" attributes="1"/>
+                                          <Component id="jButtonLK3" alignment="1" pref="115" max="32767" attributes="1"/>
+                                          <Component id="jButtonLK5" alignment="1" pref="115" max="32767" attributes="1"/>
+                                          <Component id="jButtonLK7" alignment="0" pref="115" max="32767" attributes="1"/>
+                                          <Component id="jButtonLK9" alignment="0" pref="115" max="32767" attributes="1"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jButtonLK8" pref="107" max="32767" attributes="1"/>
+                                          <Component id="jButtonLK4" alignment="0" pref="107" max="32767" attributes="1"/>
+                                          <Component id="jButtonRK2" alignment="0" pref="107" max="32767" attributes="1"/>
+                                          <Component id="jButtonRK" alignment="1" max="32767" attributes="1"/>
+                                          <Component id="jButtonRK1" alignment="1" pref="107" max="32767" attributes="1"/>
+                                          <Component id="jButtonLK6" alignment="1" pref="107" max="32767" attributes="1"/>
+                                          <Component id="jButtonLK10" alignment="0" pref="107" max="32767" attributes="1"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                          </Group>
+                          <Component id="WSlider" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jButtondoMove" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jTextFieldMove" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jButtonFreq" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jTextFieldFreq" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jButtonLK2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jButtonRK2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Component id="VSlider" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="WSlider" alignment="1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="99" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jButtonLK" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jButtonRK" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jButtonRK1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jButtonLK1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Component id="LSlider" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+              </Group>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jButtonLK3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButtonLK4" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jButtonLK5" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButtonLK6" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jButtonStop" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButtonPoseInit" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jButtonLK7" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonLK8" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jButtonLK9" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonLK10" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="54" max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JButton" name="jButtonStop">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jButtonStop.text"/>
+        <Property name="name" type="java.lang.String" value="jButtonStop" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonStopPressed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonPoseInit">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jButtonPoseInit.text"/>
+        <Property name="name" type="java.lang.String" value="jButtonPoseInit" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonPoseInitActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonLK">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jButtonLK.text"/>
+        <Property name="name" type="java.lang.String" value="jButtonLK" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLKActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonRK">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jButtonRK.text"/>
+        <Property name="actionCommand" type="java.lang.String" resourceKey="jButtonRK.actionCommand"/>
+        <Property name="name" type="java.lang.String" value="jButtonRK" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonRKActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtondoMove">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jButtondoMove.text"/>
+        <Property name="name" type="java.lang.String" value="jButtondoMove" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtondoMoveActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jTextFieldMove">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jTextFieldMove.text"/>
+        <Property name="name" type="java.lang.String" value="jTextFieldMove" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jTextFieldFreq">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jTextFieldFreq.text"/>
+        <Property name="name" type="java.lang.String" value="jTextFieldFreq" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonFreq">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jButtonFreq.text"/>
+        <Property name="name" type="java.lang.String" value="jButtonFreq" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButtonFreqMouseClicked"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JSlider" name="VSlider">
+      <Properties>
+        <Property name="minimum" type="int" value="-100"/>
+        <Property name="orientation" type="int" value="1"/>
+        <Property name="paintTicks" type="boolean" value="true"/>
+        <Property name="toolTipText" type="java.lang.String" resourceKey="VSlider.toolTipText"/>
+        <Property name="value" type="int" value="0"/>
+        <Property name="name" type="java.lang.String" value="VSlider" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="VSliderMouseReleased"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JSlider" name="LSlider">
+      <Properties>
+        <Property name="minimum" type="int" value="-100"/>
+        <Property name="paintTicks" type="boolean" value="true"/>
+        <Property name="value" type="int" value="0"/>
+        <Property name="name" type="java.lang.String" value="LSlider" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="LSliderMouseReleased"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JSlider" name="WSlider">
+      <Properties>
+        <Property name="minimum" type="int" value="-100"/>
+        <Property name="paintTicks" type="boolean" value="true"/>
+        <Property name="value" type="int" value="0"/>
+        <Property name="name" type="java.lang.String" value="WSlider" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="WSliderMouseReleased"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonLK1">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jButtonLK1.text"/>
+        <Property name="name" type="java.lang.String" value="jButtonLK1" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLK1ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonRK1">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jButtonRK1.text"/>
+        <Property name="actionCommand" type="java.lang.String" resourceKey="jButtonRK1.actionCommand"/>
+        <Property name="name" type="java.lang.String" value="jButtonRK1" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonRK1ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonLK2">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jButtonLK2.text"/>
+        <Property name="name" type="java.lang.String" value="jButtonLK2" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLK2ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonRK2">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jButtonRK2.text"/>
+        <Property name="name" type="java.lang.String" value="jButtonRK2" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonRK2ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonLK3">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jButtonLK3.text"/>
+        <Property name="name" type="java.lang.String" value="jButtonLK3" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLK3ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonLK4">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jButtonLK4.text"/>
+        <Property name="name" type="java.lang.String" value="jButtonLK4" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLK4ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonLK5">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jButtonLK5.text"/>
+        <Property name="name" type="java.lang.String" value="jButtonLK5" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLK5ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonLK6">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jButtonLK6.text"/>
+        <Property name="name" type="java.lang.String" value="jButtonLK6" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLK6ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonLK7">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jButtonLK7.text"/>
+        <Property name="name" type="java.lang.String" value="jButtonLK7" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLK7ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonLK8">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jButtonLK8.text"/>
+        <Property name="name" type="java.lang.String" value="jButtonLK8" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLK8ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonLK9">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jButtonLK9.text"/>
+        <Property name="name" type="java.lang.String" value="jButtonLK9" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLK9ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonLK10">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jButtonLK10.text"/>
+        <Property name="name" type="java.lang.String" value="jButtonLK10" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLK10ActionPerformed"/>
+      </Events>
+    </Component>
+  </SubComponents>
+</Form>

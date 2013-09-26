@@ -1,0 +1,8 @@
+<component id="TextSpeech">
+	<state id="initial" x="4.0" y="25.0" code="Initial_state_code" >
+	</state>
+	<state id="Speech" x="321.0" y="79.0" code="Speech_state_code">
+	</state>
+	<transition id="Speech2Initial0" x="165.5" y="169.5" code="Speech2Initial0_transition_code" source="Speech" target="Initial" priority="1" timer="false"/>
+	<transition id="Initial2Speech0" x="208.5" y="45.0" code="Initial2Speech0_transition_code" source="Initial" target="Speech" priority="2" timer="false"/>
+</component>

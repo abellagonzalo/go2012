@@ -1,0 +1,18 @@
+<component id="ApproachBall">
+<conf autorestart="0"/>
+	<dependenceComponent id="BallDetector" x="672.0" y="118.0"/>
+	<dependenceComponent id="Go2pos" x="250.0" y="324.0"/>
+	<state id="initial" x="119.0" y="272.0" code="Initial_state_code" >
+	</state>
+	<state id="BalNear" x="492.0" y="377.0" code="BalNear_state_code">
+		<requirement id="BallDetector"/>
+		<modulation id="Go2pos"/>
+	</state>
+	<state id="BallFar" x="345.0" y="54.0" code="BallFar_state_code">
+		<requirement id="BallDetector"/>
+		<modulation id="Go2pos"/>
+	</state>
+	<transition id="BallFar22BalNear0" x="402.0" y="247.5" code="BallFar22BalNear0_transition_code" source="BallFar" target="BalNear" priority="1" timer="false"/>
+	<transition id="BalNear2BallFar20" x="546.0" y="186.5" code="BalNear2BallFar20_transition_code" source="BalNear" target="BallFar" priority="2" timer="false"/>
+	<transition id="Initial2BallFar20" x="254.5" y="105.0" code="Initial2BallFar20_transition_code" source="Initial" target="BallFar" priority="2" timer="false"/>
+</component>

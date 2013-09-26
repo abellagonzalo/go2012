@@ -1,0 +1,23 @@
+<component id="GoalieURJC">
+<conf autorestart="0"/>
+	<dependenceComponent id="BallDetector" x="80.0" y="217.0"/>
+	<dependenceComponent id="Attention" x="441.0" y="277.0"/>
+	<dependenceComponent id="GoalDetector" x="345.0" y="-5.0"/>
+	<dependenceComponent id="WorldState" x="198.0" y="353.0"/>
+	<state id="initial" x="26.0" y="19.0" code="Initial_state_code" >
+	</state>
+	<state id="Block" x="264.0" y="123.0" code="Block_state_code">
+		<requirement id="BallDetector"/>
+		<requirement id="GoalDetector"/>
+		<requirement id="WorldState"/>
+		<modulation id="Attention"/>
+	</state>
+	<state id="Despeje" x="562.0" y="175.0" code="Despeje_state_code">
+		<requirement id="GoalDetector"/>
+		<requirement id="Attention"/>
+		<requirement id="BallDetector"/>
+	</state>
+	<transition id="Initial2Block0" x="206.0" y="68.5" code="Initial2Block0_transition_code" source="Initial" target="Block" priority="1" timer="false"/>
+	<transition id="Block2Despeje0" x="472.0" y="152.0" code="Block2Despeje0_transition_code" source="Block" target="Despeje" priority="1" timer="false"/>
+	<transition id="Despeje2Block0" x="459.0" y="219.0" code="Despeje2Block0_transition_code" source="Despeje" target="Block" priority="1" timer="false"/>
+</component>

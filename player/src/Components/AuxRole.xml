@@ -1,0 +1,15 @@
+<component id="AuxRole">
+<conf autorestart="0"/>
+	<dependenceComponent id="GoalieURJC" x="165.0" y="335.0"/>
+	<dependenceComponent id="Stratego" x="463.0" y="323.0"/>
+	<state id="initial" x="296.0" y="28.0" code="Initial_state_code" >
+	</state>
+	<state id="Portero" x="166.0" y="201.0" code="Portero_state_code">
+		<modulation id="GoalieURJC"/>
+	</state>
+	<state id="Jugador" x="464.0" y="200.0" code="Jugador_state_code">
+		<modulation id="Stratego"/>
+	</state>
+	<transition id="Initial2Portero0" x="259.0" y="153.5" code="Initial2Portero0_transition_code" source="Initial" target="Portero" priority="1" timer="false"/>
+	<transition id="Initial2Jugador0" x="426.0" y="160.0" code="Initial2Jugador0_transition_code" source="Initial" target="Jugador" priority="2" timer="false"/>
+</component>

@@ -1,0 +1,11 @@
+<component id="FootContact">
+	<state id="initial" x="0.0" y="0.0" code="Initial_state_code" >
+	</state>
+	<state id="Contact" x="488.0" y="31.0" code="Contact_state_code">
+	</state>
+	<state id="NoContact" x="194.0" y="45.0" code="NoContact_state_code">
+	</state>
+	<transition id="Initial2NoContact0" x="143.0" y="68.5" code="Initial2NoContact0_transition_code" source="Initial" target="NoContact" priority="1" timer="false"/>
+	<transition id="NoContact2Contact0" x="357.0" y="41.0" code="NoContact2Contact0_transition_code" source="NoContact" target="Contact" priority="1" timer="false"/>
+	<transition id="Contact2NoContact0" x="355.5" y="134.0" code="Contact2NoContact0_transition_code" source="Contact" target="NoContact" priority="1" timer="false"/>
+</component>

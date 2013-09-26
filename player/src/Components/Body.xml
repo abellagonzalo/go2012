@@ -1,0 +1,19 @@
+<component id="Body">
+<conf autorestart="0"/>
+	<dependenceComponent id="Fallen" x="508.0" y="46.0"/>
+	<state id="initial" x="59.0" y="153.0" code="Initial_state_code" >
+	</state>
+	<state id="Walking" x="318.0" y="48.0" code="Walking_state_code">
+		<requirement id="Fallen"/>
+	</state>
+	<state id="Stopped" x="322.0" y="278.0" code="Stopped_state_code">
+		<requirement id="Fallen"/>
+	</state>
+	<state id="Moving" x="614.0" y="287.0" code="Moving_state_code">
+	</state>
+	<transition id="Initial2Stopped0" x="244.0" y="260.0" code="Initial2Stopped0_transition_code" source="Initial" target="Stopped" priority="1" timer="false"/>
+	<transition id="Stopped2Walking0" x="301.0" y="189.0" code="Stopped2Walking0_transition_code" source="Stopped" target="Walking" priority="1" timer="false"/>
+	<transition id="Walking2Stopped0" x="401.0" y="176.0" code="Walking2Stopped0_transition_code" source="Walking" target="Stopped" priority="1" timer="false"/>
+	<transition id="Stopped2Moving0" x="497.0" y="290.5" code="Stopped2Moving0_transition_code" source="Stopped" target="Moving" priority="2" timer="false"/>
+	<transition id="Moving2Stopped0" x="497.0" y="379.5" code="Moving2Stopped0_transition_code" source="Moving" target="Stopped" priority="1" timer="true"/>
+</component>

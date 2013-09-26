@@ -1,0 +1,19 @@
+<component id="Defender">
+	<dependenceComponent id="FaceBall" x="98.0" y="332.0"/>
+	<dependenceComponent id="Body" x="271.0" y="334.0"/>
+	<dependenceComponent id="BallDetector" x="447.0" y="324.0"/>
+	<dependenceComponent id="SearchBall" x="595.0" y="321.0"/>
+	<state id="initial" x="329.0" y="66.0" code="Initial_state_code" >
+	</state>
+	<state id="StayInPos" x="178.0" y="203.0" code="StayInPos_state_code">
+		<requirement id="FaceBall"/>
+		<modulation id="Body"/>
+	</state>
+	<state id="SearchingBall" x="508.0" y="193.0" code="SearchingBall_state_code">
+		<requirement id="BallDetector"/>
+		<requirement id="SearchBall"/>
+	</state>
+	<transition id="Initial2SearchingBall0" x="494.5" y="124.5" code="Initial2SearchingBall0_transition_code" source="Initial" target="SearchingBall" priority="1" timer="false"/>
+	<transition id="SearchingBall2StayInPos0" x="371.0" y="207.0" code="SearchingBall2StayInPos0_transition_code" source="SearchingBall" target="StayInPos" priority="1" timer="false"/>
+	<transition id="StayInPos2SearchingBall0" x="377.0" y="277.0" code="StayInPos2SearchingBall0_transition_code" source="StayInPos" target="SearchingBall" priority="1" timer="false"/>
+</component>

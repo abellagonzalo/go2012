@@ -1,0 +1,21 @@
+<component id="SearchBall">
+<conf autorestart="0"/>
+	<dependenceComponent id="Body" x="482.0" y="441.0"/>
+	<dependenceComponent id="Attention" x="180.0" y="433.0"/>
+	<dependenceComponent id="BallDetector" x="321.0" y="435.0"/>
+	<state id="initial" x="15.0" y="6.0" code="Initial_state_code" >
+	</state>
+	<state id="RotateBody" x="483.0" y="199.0" code="RotateBody_state_code">
+		<requirement id="BallDetector"/>
+		<modulation id="Body"/>
+		<modulation id="Attention"/>
+	</state>
+	<state id="Stopped" x="180.0" y="198.0" code="Stopped_state_code">
+		<requirement id="BallDetector"/>
+		<modulation id="Attention"/>
+		<modulation id="Body"/>
+	</state>
+	<transition id="Initial2Stopped0" x="151.0" y="139.5" code="Initial2Stopped0_transition_code" source="Initial" target="Stopped" priority="2" timer="false"/>
+	<transition id="Stopped2RotateBody0" x="362.5" y="122.5" code="Stopped2RotateBody0_transition_code" source="Stopped" target="RotateBody" priority="1" timer="true"/>
+	<transition id="RotateBody2Stopped0" x="363.5" y="232.5" code="RotateBody2Stopped0_transition_code" source="RotateBody" target="Stopped" priority="2" timer="true"/>
+</component>
