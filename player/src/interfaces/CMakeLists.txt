@@ -5,9 +5,11 @@
 
 ### BICA generation code begin
 
-set(BICA_ICEFILES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/interfaces/slice/bica)
-set(BICA_OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/interfaces/cpp/bica)
+set(BICA_ICEFILES_DIR ${CMAKE_CURRENT_LIST_DIR}/slice/bica)
+set(BICA_OUTPUT_DIR ${CMAKE_CURRENT_LIST_DIR}/cpp/bica)
 set(SLICE2CPPE ${PROJECT_SOURCE_DIR}/bin/slice2cppe) 
+
+file(MAKE_DIRECTORY ${BICA_OUTPUT_DIR})
 
 set (BICA_FILES
 	common
@@ -38,8 +40,10 @@ endforeach()
 
 ### Bica for jderobot begin
 
-set(JDEROBOT_ICEFILES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/interfaces/slice)
-set(JDEROBOT_OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/interfaces/cpp/jderobot)
+set(JDEROBOT_ICEFILES_DIR ${CMAKE_CURRENT_LIST_DIR}/slice)
+set(JDEROBOT_OUTPUT_DIR ${CMAKE_CURRENT_LIST_DIR}/cpp/jderobot)
+
+file(MAKE_DIRECTORY ${JDEROBOT_OUTPUT_DIR})
 
 set (JDEROBOT_FILES
 	common_jderobot

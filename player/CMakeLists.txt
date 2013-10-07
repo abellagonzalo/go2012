@@ -20,12 +20,10 @@ option(WEBOTS
   OFF
 )
 
-add_definitions(" -m32 ")
-
 # Generar los ficheros de Bica y las adaptaciones de Bica para 
 # JdeRobot. Los ficheros se crean los respectivos directorios
 # en src/interfaces/cpp/ .
-include(cmake/GenerateBica.cmake)
+add_subdirectory(src/interfaces)
 
 # Todos los directorios con headers
 include_directories(

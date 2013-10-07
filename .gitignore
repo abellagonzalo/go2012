@@ -1,2 +1,5 @@
-player/build-webots/*
+# Ignore generated Ice interfaces
 player/src/interfaces/cpp/*
+
+# Ignore player build dir
+player/build-*
