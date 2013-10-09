@@ -28,7 +28,6 @@ using namespace std;
 class ObjectState
 {
 public:
-
 	// Reliability type
 	enum ObjectReliability {
 		UNRELIABLE,
@@ -68,32 +67,33 @@ public:
 	static const float HIGH_RELIABILITY_QUALITY		=
 			1.0f - ((500.0f * 500.0f * GEOMETRY_PI) / (3000.0f * 3000.0f * GEOMETRY_PI));
 
-	/*Vector2<double> getPositionInFieldCoordinates(const RobotPose& rp) const
-		  {
-		return Geometry::relative2FieldCoord(rp, position.x, position.y);
-		  }*/
+	ObjectState() {
+		reliabilityString[UNRELIABLE] = "Unreliable";
+		reliabilityString[LOW_RELIABLE] = "Low";
+		reliabilityString[MEDIUM_RELIABLE] = "Medium";
+		reliabilityString[HIGH_RELIABLE] = "High";
+		reliabilityString[MOST_RELIABLE] = "Most";
+	}
 
-	Vector2<double> getVelocityInFieldCoordinates(const RobotPose& rp) const
-																																			{
+
+	Vector2<double> getVelocityInFieldCoordinates(const RobotPose& rp) const {
 		double c(rp.getCos());
 		double s(rp.getSin());
 		return Vector2<double>(velocity.x*c - velocity.y*s, velocity.x*s + velocity.y*c);
-																																			}
+	}
 
-	Vector2<double> getPositionInRelativeCoordinates() const
-																																																																																					{
+	Vector2<double> getPositionInRelativeCoordinates() const {
 		return position;
-																																																																																					}
+	}
 
 	float getQuality() const
 	{
 		return quality;
 	}
 
-	Vector2<double> getVelocityInRelativeCoordinates() const
-																																																																																					{
+	Vector2<double> getVelocityInRelativeCoordinates() const {
 		return velocity;
-																																																																																					}
+	}
 
 	double getAngle() const
 	{
@@ -117,40 +117,19 @@ public:
 		this->quality = newQuality;
 	}
 
-	ObjectReliability getReliability() const
-	{
-		return reliability;
-	}
-
-	static String reliability2string (ObjectReliability rel)
-	{
-		switch (rel) {
-		case UNRELIABLE: return "Unreliable";
-		case LOW_RELIABLE: return "Low";
-		case MEDIUM_RELIABLE: return "Medium";
-		case HIGH_RELIABLE: return "High";
-		case MOST_RELIABLE: return "Most";
-		default: return "";
-		}
-		cerr << "ObjectState::reliability2string() Incorrect reliability value (" <<
-				rel << ")\n";
-	}
-
 	void setReliability(ObjectReliability newReliability)
 	{
 		this->reliability = newReliability;
 	}
 
-	/* void setPositionAndVelocityInFieldCoordinates(const Vector2<double>& positionOnField,
-                                                const Vector2<double>& velocityOnField,
-                                                const RobotPose& rp)
-  {
-    position = Geometry::fieldCoord2Relative(rp, positionOnField);
-    double c(rp.getCos());
-    double s(rp.getSin());
-    velocity = Vector2<double>(velocityOnField.x*c + velocityOnField.y*s,
-                              -velocityOnField.x*s + velocityOnField.y*c);
-  }*/
+	ObjectReliability getReliability() const
+	{
+		return reliability;
+	}
+
+	std::string getReliabilityString() const {
+		return reliabilityString.find(reliability)->second;
+	}
 
 	const ObjectState& operator=(const ObjectState& other)
 	{
@@ -173,6 +152,9 @@ protected:
 
 	/** Reliability of the object's estimation */
 	ObjectReliability reliability;
+
+	/** Reliability to string */
+	std::map<ObjectReliability, std::string> reliabilityString;
 };
 
 #endif //__ObjectState_h_

@@ -254,30 +254,7 @@ GoalDetector::step()
 	addToLog ( "p1RightYcov", ComponentSnapshot::LOG_DOUBLE, cvmGet(goals->yellowJPDAF->objects[goals->p1r]->error_cov_post, 1, 1) );
 
 	endLog( getName() );
-	/*if(this->isSeen())
-		cerr<<"*";
-	else
-		cerr<<"/";*/
 
-	//updateFromOdometry();
-
-	//endDebugInfo();
-	/*
-	cerr<<"_______________________________________________________"<<endl;
-	cerr<<"p0 Left\n\t("<<goals->p0LeftEstimate.getPositionInRelativeCoordinates().x<<", "<<goals->p0LeftEstimate.getPositionInRelativeCoordinates().y<<endl;
-	cerr<<"\tQ = "<<goals->p0LeftEstimate.getQuality()<<"\tR = "<<ObjectState::reliability2string(goals->p0LeftEstimate.getReliability())<<endl;
-
-	cerr<<"p0 Right\n\t("<<goals->p0RightEstimate.getPositionInRelativeCoordinates().x<<", "<<goals->p0RightEstimate.getPositionInRelativeCoordinates().y<<endl;
-	cerr<<"\tQ = "<<goals->p0RightEstimate.getQuality()<<"\tR = "<<ObjectState::reliability2string(goals->p0RightEstimate.getReliability())<<endl;
-
-	cerr<<"p1 Left\n\t("<<goals->p1LeftEstimate.getPositionInRelativeCoordinates().x<<", "<<goals->p1LeftEstimate.getPositionInRelativeCoordinates().y<<endl;
-	cerr<<"\tQ = "<<goals->p1LeftEstimate.getQuality()<<"\tR = "<<ObjectState::reliability2string(goals->p1LeftEstimate.getReliability())<<endl;
-
-	cerr<<"p1 Right\n\t("<<goals->p1RightEstimate.getPositionInRelativeCoordinates().x<<", "<<goals->p1RightEstimate.getPositionInRelativeCoordinates().y<<endl;
-	cerr<<"\tQ = "<<goals->p1RightEstimate.getQuality()<<"\tR = "<<ObjectState::reliability2string(goals->p1RightEstimate.getReliability())<<endl;
-
-	//cerr<<"["<<goals->p0ElapsedTimeSinceLastObs<<", "<<goals->p0ElapsedTimeSinceLastObs<<"]"<<endl;
-	 */
 	updateAP();
 	endDebugInfo();
 }
@@ -1003,7 +980,7 @@ GoalDetector::getVisualMemoryObject(const string &obj, const Ice::Current& c)
 		object->dy = 4 * sqrt(cvmGet(goals->yellowJPDAF->objects[goals->p0l]->error_cov_post, 1, 1));
 		object->quality = goals->p0LeftEstimate.getQuality();
 		object->time = goals->p0ElapsedTimeSinceLastObs;
-		object->reliability = ObjectState::reliability2string(goals->p0LeftEstimate.getReliability());
+		object->reliability = goals->p0LeftEstimate.getReliabilityString();
 	} else if (obj == "p0RightPost") {
 		object->x = goals->p0RightEstimate.getPositionInRelativeCoordinates().x;
 		object->y = goals->p0RightEstimate.getPositionInRelativeCoordinates().y;
@@ -1016,7 +993,7 @@ GoalDetector::getVisualMemoryObject(const string &obj, const Ice::Current& c)
 		object->dy = 4 * sqrt(cvmGet(goals->yellowJPDAF->objects[goals->p0r]->error_cov_post, 1, 1));
 		object->quality = goals->p0RightEstimate.getQuality();
 		object->time = goals->p0ElapsedTimeSinceLastObs;
-		object->reliability = ObjectState::reliability2string(goals->p0RightEstimate.getReliability());
+		object->reliability = goals->p0RightEstimate.getReliabilityString();
 	}else if (obj == "p0Net") {
 		object->x = goals->p0NetCenterEstimate.getPositionInRelativeCoordinates().x;
 		object->y = goals->p0NetCenterEstimate.getPositionInRelativeCoordinates().y;
@@ -1024,7 +1001,7 @@ GoalDetector::getVisualMemoryObject(const string &obj, const Ice::Current& c)
 		object->dy = 0;
 		object->quality = goals->p0NetCenterEstimate.getQuality();
 		object->time = goals->p0ElapsedTimeSinceLastObs;
-		object->reliability = ObjectState::reliability2string(goals->p0NetCenterEstimate.getReliability());
+		object->reliability = goals->p0NetCenterEstimate.getReliabilityString();
 	} else if (obj == "p1LeftPost") {
 		object->x = goals->p1LeftEstimate.getPositionInRelativeCoordinates().x;
 		object->y = goals->p1LeftEstimate.getPositionInRelativeCoordinates().y;
@@ -1037,7 +1014,7 @@ GoalDetector::getVisualMemoryObject(const string &obj, const Ice::Current& c)
 		object->dy = 4 * sqrt(cvmGet(goals->yellowJPDAF->objects[goals->p1l]->error_cov_post, 1, 1));
 		object->quality = goals->p1LeftEstimate.getQuality();
 		object->time = goals->p1ElapsedTimeSinceLastObs;
-		object->reliability = ObjectState::reliability2string(goals->p1LeftEstimate.getReliability());
+		object->reliability = goals->p1LeftEstimate.getReliabilityString();
 	} else if (obj == "p1RightPost") {
 		object->x = goals->p1RightEstimate.getPositionInRelativeCoordinates().x;
 		object->y = goals->p1RightEstimate.getPositionInRelativeCoordinates().y;
@@ -1050,7 +1027,7 @@ GoalDetector::getVisualMemoryObject(const string &obj, const Ice::Current& c)
 		object->dy = 4 * sqrt(cvmGet(goals->yellowJPDAF->objects[goals->p1r]->error_cov_post, 1, 1));
 		object->quality = goals->p1RightEstimate.getQuality();
 		object->time = goals->p1ElapsedTimeSinceLastObs;
-		object->reliability = ObjectState::reliability2string(goals->p1RightEstimate.getReliability());
+		object->reliability = goals->p1RightEstimate.getReliabilityString();
 	} else if (obj == "p1Net") {
 		object->x = goals->p1NetCenterEstimate.getPositionInRelativeCoordinates().x;
 		object->y = goals->p1NetCenterEstimate.getPositionInRelativeCoordinates().y;
@@ -1058,7 +1035,7 @@ GoalDetector::getVisualMemoryObject(const string &obj, const Ice::Current& c)
 		object->dy = 0;
 		object->quality = goals->p1NetCenterEstimate.getQuality();
 		object->time = goals->p1ElapsedTimeSinceLastObs;
-		object->reliability = ObjectState::reliability2string(goals->p1NetCenterEstimate.getReliability());
+		object->reliability = goals->p1NetCenterEstimate.getReliabilityString();
 	} else {
 		cerr << "GoalDetector::getVisualMemoryObject() Incorrect object (" << obj << ")\n";
 	}

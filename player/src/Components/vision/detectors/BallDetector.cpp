@@ -62,6 +62,8 @@ float lastMovY = 0.0;
 float lastMovTh = 0.0;
 
 kalman::algorithm::MatrixCMPair filter = kalman::algorithm::pair_generator();
+long lastObsTimestamp;
+long currentTimestamp;
 
 struct Prediction {
 	double x, y, theta, time, mobility, friction;
@@ -78,7 +80,8 @@ void BallDetector::predict_step() {
 	body->getRelativeMovement(lastBodyX, lastBodyY, lastBodyTh, movX, movY, movTh);
 	body->getGlobalMovement(lastBodyX, lastBodyY, lastBodyTh);
 
-	Prediction prediction = {movX, movY, movTh, perception->getImageTs(), 0, .95};
+	currentTimestamp = perception->getImageTs();
+	Prediction prediction = {movX, movY, movTh, currentTimestamp, 0, .95};
 	Prediction noise = {.01, .01, 3.1416/3600., 0, 3., .01};
 
 	filter = kalman::algorithm::predict(filter, predictionToMatrix(prediction), predictionToMatrix(noise));
@@ -123,6 +126,7 @@ void BallDetector::update_step() {
 	if (balls.empty()) return;
 	//std::cerr << "update_step" << std::endl;
 
+	lastObsTimestamp = currentTimestamp;
 	std::list<BallSample>::iterator ball = balls.begin();
 	Observation observation = {ball->p3D.X, ball->p3D.Y};
 	Observation noise = {1., 1.};
@@ -491,6 +495,71 @@ BallDetector::updateFromOdometry()
 	lastBodyTh = currentBodyTh;
 }
 
+long elapsedTimeSinceLastObs() {
+	return currentTimestamp - lastObsTimestamp;
+}
+
+Vector2<double> BallDetector::getPosition() const {
+	return Vector2<double>(getX(), getY());
+}
+
+double BallDetector::getX() const {
+	return filter.first.e(0,0);
+}
+
+double BallDetector::getY() const {
+	return filter.first.e(1,0);
+}
+
+double BallDetector::getXerror() const {
+	return filter.second.e(0,0);
+}
+
+double BallDetector::getYerror() const {
+	return filter.second.e(1,1);
+}
+
+double BallDetector::getAngle() const {
+	return atan2(getY(), getX());
+}
+
+double BallDetector::getQuality() const {
+	float a = 4 * sqrt(getXerror());
+	float b = 4 * sqrt(getYerror());
+	float area = pi * a * b;
+	return area > ObjectState::MAX_UNCERTAINTY_AREA ? 0.0f 
+				: 1.0f - (area / ObjectState::MAX_UNCERTAINTY_AREA);
+}
+
+ObjectState::ObjectReliability BallDetector::getReliability() const {
+	double quality = getQuality();
+
+	if (quality > ObjectState::HIGH_RELIABILITY_QUALITY)
+		return ObjectState::MOST_RELIABLE;
+
+	else if (quality > ObjectState::MEDIUM_RELIABILITY_QUALITY)
+		return ObjectState::HIGH_RELIABLE;
+
+	else if (quality > ObjectState::LOW_RELIABILITY_QUALITY)
+		return ObjectState::MEDIUM_RELIABLE;
+
+	else if (quality > ObjectState::VERY_LOW_RELIABILITY_QUALITY)
+		return ObjectState::LOW_RELIABLE;
+
+	else
+		return ObjectState::UNRELIABLE;
+}
+
+std::string BallDetector::getReliabilityString() const {
+	switch ( getReliability() ) {
+		case ObjectState::UNRELIABLE: 		 return "Unreliable";
+		case ObjectState::LOW_RELIABLE: 	 return "Low";
+		case ObjectState::MEDIUM_RELIABLE: return "Medium";
+		case ObjectState::HIGH_RELIABLE: 	 return "High";
+		case ObjectState::MOST_RELIABLE: 	 return "Most";
+		default: 													 return "";
+	}
+}
 
 bica::ShapeList
 BallDetector::getGrDebugAbs()
@@ -571,7 +640,7 @@ BallDetector::getVisualMemoryObject(const Ice::Current& c)
 
 	ball->quality = ballmodel->estimate.getQuality();
 	ball->time = ballmodel->elapsedTimeSinceLastObs;
-	ball->reliability = ObjectState::reliability2string(ballmodel->estimate.getReliability());
+	ball->reliability = ballmodel->estimate.getReliabilityString();
 
 	return ball;
 }

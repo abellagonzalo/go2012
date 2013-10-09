@@ -110,8 +110,7 @@ SharedTeamInfo::updateTeamInfo()
 			ballDetector->ballmodel->estimate.getPositionInRelativeCoordinates().y);
 	teamData[me - 1].setBallTime(
 			ballDetector->ballmodel->elapsedTimeSinceLastObs);
-	teamData[me - 1].setBallReliability(
-			ObjectState::reliability2string(ballDetector->ballmodel->estimate.getReliability()));
+	teamData[me - 1].setBallReliability(ballDetector->ballmodel->estimate.getReliabilityString());
 	teamData[me - 1].setTimestamp(getCurrentTime());
 
 	// Send info to the rest of teammates (Goalie not included)
@@ -138,7 +137,6 @@ SharedTeamInfo::updateTeamInfo()
 	for (int i = 0; i < NUM_ROBOTS; i++) {
 		try {
 			if (teammatesInfoPrx[i] != NULL) {
-				//cout << "Sending new opinion to robot " << i + 1 << endl;
 				teammatesInfoPrx[i]->putSwitchInfo(myOpinion);
 			}
 		} catch (const Ice::Exception& ex) {

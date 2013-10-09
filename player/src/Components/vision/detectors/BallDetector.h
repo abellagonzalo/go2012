@@ -76,6 +76,16 @@ public:
 	void getGTBallAbs( double &x, double &y );
 	void getGTBallRel( double &x, double &y );
 
+	Vector2<double> getPosition() const;
+	double getX() const;
+	double getY() const;
+	double getXerror() const;
+	double getYerror() const;
+	double getQuality() const;
+	double getAngle() const;
+	ObjectState::ObjectReliability getReliability() const;
+	std::string getReliabilityString() const;
+
 	BallModel 		*ballmodel;
 
 private:

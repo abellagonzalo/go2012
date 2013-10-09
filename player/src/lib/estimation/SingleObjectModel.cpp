@@ -44,6 +44,7 @@ SingleObjectModel::calculateSingleObjectQuality( int object )
 	float a = 4 * sqrt(cvmGet(this->jpdaf->objects[object]->error_cov_post, 0, 0));
 	float b = 4 * sqrt(cvmGet(this->jpdaf->objects[object]->error_cov_post, 1, 1));
 	float area = pi * a * b;
+	return area > ObjectState::MAX_UNCERTAINTY_AREA ? 0.0f : 1.0f - (area / ObjectState::MAX_UNCERTAINTY_AREA);
 
 	if (area > ObjectState::MAX_UNCERTAINTY_AREA) {
 		return 0.0f;

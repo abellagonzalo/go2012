@@ -1817,7 +1817,7 @@ W3DDetector::getVisualMemoryObject(const Ice::Current& c)
 	//cout << "Quality: " << ballmodel->estimate.getQuality() << endl;
 	ball->quality = ballmodel->estimate.getQuality();
 	ball->time = ballmodel->elapsedTimeSinceLastObs;
-	ball->reliability = ObjectState::reliability2string(ballmodel->estimate.getReliability());
+	ball->reliability = ballmodel->estimate.getReliabilityString();
 
 	return ball;
 }
