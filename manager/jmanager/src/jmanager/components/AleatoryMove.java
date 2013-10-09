@@ -18,7 +18,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import jmanager.JmanagerApp;
-import jmanager.JmanagerView;
+// import jmanager.JmanagerView;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.Task;
@@ -240,8 +240,8 @@ public class AleatoryMove extends javax.swing.JPanel {
 
         @Override
         protected Void doInBackground() throws Exception {
-            JmanagerView.root.getConnection().getAleatoryMovePrx().setConfFile(getConfFilePath());
-            JmanagerView.root.getConnection().getAleatoryMovePrx().loadConfFile();          
+            //JmanagerView.root.getConnection().getAleatoryMovePrx().setConfFile(getConfFilePath());
+            //JmanagerView.root.getConnection().getAleatoryMovePrx().loadConfFile();
             return null;
         }
 
@@ -268,7 +268,7 @@ public class AleatoryMove extends javax.swing.JPanel {
         
         @Override
         protected Void doInBackground() throws Exception {
-            JmanagerView.root.getConnection().getAleatoryMovePrx().saveConfFile();
+            //JmanagerView.root.getConnection().getAleatoryMovePrx().saveConfFile();
             return null;
         }
     }
@@ -287,7 +287,7 @@ public class AleatoryMove extends javax.swing.JPanel {
 
         @Override
         protected Void doInBackground() throws Exception {
-            JmanagerView.root.getConnection().getAleatoryMovePrx().add(move);
+            //JmanagerView.root.getConnection().getAleatoryMovePrx().add(move);
             return null;
         }
 
@@ -317,7 +317,7 @@ public class AleatoryMove extends javax.swing.JPanel {
 
         @Override
         protected Void doInBackground() throws Exception {
-            JmanagerView.root.getConnection().getAleatoryMovePrx().remove(move);
+            //JmanagerView.root.getConnection().getAleatoryMovePrx().remove(move);
             return null;
         }
 
@@ -344,8 +344,8 @@ public class AleatoryMove extends javax.swing.JPanel {
 
         @Override
         protected Void doInBackground() throws Exception {
-            String[] moves = JmanagerView.root.getConnection().getAleatoryMovePrx().get();
-            setMovesList(moves);
+            //String[] moves = JmanagerView.root.getConnection().getAleatoryMovePrx().get();
+            //setMovesList(moves);
             return null;
         }
 
@@ -371,7 +371,7 @@ public class AleatoryMove extends javax.swing.JPanel {
 
         @Override
         protected Void doInBackground() throws Exception {
-            JmanagerView.root.getConnection().getAleatoryMovePrx().execute();
+            //JmanagerView.root.getConnection().getAleatoryMovePrx().execute();
             return null;
         }
 
@@ -415,7 +415,8 @@ public class AleatoryMove extends javax.swing.JPanel {
 
         @Override
         protected String doInBackground() throws Exception {
-            return JmanagerView.root.getConnection().getAleatoryMovePrx().getConfFile();
+            // return JmanagerView.root.getConnection().getAleatoryMovePrx().getConfFile();
+            return "";
         }
 
         @Override

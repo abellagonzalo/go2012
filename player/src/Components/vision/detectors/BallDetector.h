@@ -29,8 +29,7 @@
 #include "GTLocalization.h"
 #include "vision/detectors/GoalDetector.h"
 #include "BallAttentionClient.h"
-
-
+#include "estimation/kalman/Kalman2D.h"
 
 class Perception;
 class GoalDetector;
@@ -84,6 +83,7 @@ public:
 	void getGTBallRel( double &x, double &y );
 
 	BallModel 		*ballmodel;
+	kalman::MyKalman myKalman;
 
 private:
 

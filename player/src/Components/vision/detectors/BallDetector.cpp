@@ -78,6 +78,11 @@ BallDetector::step()
 	long beginVMcycleTime = getCurrentTime();
 	ballmodel->predict();
 	ballmodel->updateFromOdometry();
+
+	kalman::Prediction pred;
+	kalman::Odometry odo;
+	myKalman.predict(pred, odo);
+
 	long endVMcycleTime = getCurrentTime() - beginVMcycleTime;
 	vmIters++;
 	vmMeanCycleTime = ((vmMeanCycleTime * (vmIters - 1)) + endVMcycleTime) / (vmIters);
@@ -93,18 +98,9 @@ BallDetector::step()
 	{
 		updateFromObservation();
 
+		kalman::Observation obs;
+		myKalman.update(obs);
 		this->lastSeen = this->getTime();
-		//cerr<<"["<<this->lastSeen<<"]";
-	}
-	//ts = getCurrentTime();
-	//s<<"HB\t"<<ts<<"\t1.0"<<endl;
-	//s<<"HB\t"<<ts<<"\t0.0"<<endl;
-	//writeLog(s.str());
-
-	int det = 0;
-	if((this->balls.size() > 0))
-	{
-		det = 1;
 	}
 
 	Vector2<double> ball = ballmodel->estimate.getPositionInRelativeCoordinates();
@@ -117,7 +113,6 @@ BallDetector::step()
 	kinematics->get3DPosition(s3D, simg);
 
 	double quality = ballmodel->estimate.getQuality();
-	//cout << "Ball Quality: " << quality << endl;
 
 	// Log
 	beginLog();
@@ -289,25 +284,27 @@ BallDetector::getBallRadius(BallRegion* ballRegion, BallSample &ball)
 	if(sum3 < 0 && sum4 < 0)
 		return false;
 
-	if(sum3 > sum4) {
-		if(sum1 > sum2) {
-			/*Save the values in the ball*/
-			return this->saveValues(ballRegion, diag1, drow, sum1, sum3, ball);
-		} else {
-			/*Save the values in the ball*/
-			return this->saveValues(ballRegion, dcol, diag1, sum2, sum3, ball);
-		}
-	} else {
-		if(sum1 > sum2) {
-			/*Save the values in the ball*/
-			return this->saveValues(ballRegion, -1*diag2, drow, sum1, sum4, ball);
-		} else {
-			/*Save the values in the ball*/
-			return this->saveValues(ballRegion, dcol, diag2, sum2, sum4, ball);
-		}
-	}
+	return this->saveValues(ballRegion, diag1, drow, std::max(sum1, sum2), std::max(sum3, sum4), ball);
 
-	return false;
+	// if(sum3 > sum4) {
+	// 	if(sum1 > sum2) {
+	// 		/*Save the values in the ball*/
+	// 		return this->saveValues(ballRegion, diag1, drow, sum1, sum3, ball);
+	// 	} else {
+	// 		/*Save the values in the ball*/
+	// 		return this->saveValues(ballRegion, dcol, diag1, sum2, sum3, ball);
+	// 	}
+	// } else {
+	// 	if(sum1 > sum2) {
+	// 		/*Save the values in the ball*/
+	// 		return this->saveValues(ballRegion, -1*diag2, drow, sum1, sum4, ball);
+	// 	} else {
+	// 		/*Save the values in the ball*/
+	// 		return this->saveValues(ballRegion, dcol, diag2, sum2, sum4, ball);
+	// 	}
+	// }
+
+	// return false;
 }
 
 bool
@@ -327,18 +324,17 @@ BallDetector::saveValues(BallRegion* ballRegion, int col, int row, int sum1, int
 	ball.ratio = ratio;
 
 	/*Get the radius*/
-	if(sum1 > sum2)
-		ball.radius = ((float)sum1)/2.0;
-	else
-		ball.radius = ((float)sum2)/2.0;
+	ball.radius = ((float)(std::max(sum1, sum2)))/2.0;
+	// if(sum1 > sum2)
+	// 	ball.radius = ((float)sum1)/2.0;
+	// else
+	// 	ball.radius = ((float)sum2)/2.0;
 
 	return true;	
 }
 
 bool
 BallDetector::checkBallRatio(int sum1, int sum2, float &ratio) {
-
-	int max, min;
 
 	/*Both more than 1*/
 	if(sum1 <= 1 || sum2 <= 1)
@@ -349,13 +345,8 @@ BallDetector::checkBallRatio(int sum1, int sum2, float &ratio) {
 		return false;
 
 	/*Get the maximal and cal the ratio*/
-	if(sum1 > sum2) {
-		max = sum1;
-		min = sum2;
-	} else {
-		max = sum2;
-		min = sum1;
-	}
+	int max = std::max(sum1, sum2);
+	int min = std::min(sum1, sum2);
 
 	ratio = (float)(min)/(float)max;
 
@@ -543,7 +534,6 @@ BallDetector::getGrDebugAbs()
 		double ballX, ballY;
 		getGTBallAbs( ballX, ballY );
 		bica::Point3DPtr p(new bica::Point3D( (float)ballX, (float)ballY, 0.0f ));
-		//cout << "Ball x: " << ballX << " Ball y: " << ballY << endl;
 		bica::CirclePtr c(new bica::Circle( bica::BLACK, true, "r", 125, "GTBall", p, 80.0f, 0.0f ));
 
 		shapeListAbs.push_back(c);
@@ -580,123 +570,6 @@ BallDetector::getGrDebugRel()
 	}
 
 	return shapeListRel;
-
-	/*shapeList.clear();
-
-	bica::Point3DPtr p1(new bica::Point3D);
-	bica::Point3DPtr p2(new bica::Point3D);
-	bica::ArrowPtr arrow(new bica::Arrow);
-
-	p1->x = 0.0f;
-	p1->y = 0.0f;
-	p1->z = 0.0f;
-
-	// Estimation (JPDAF)
-	p2->x = ballmodel->estimate.getPositionInRelativeCoordinates().x;
-	p2->y = ballmodel->estimate.getPositionInRelativeCoordinates().y;
-	p2->z = 0.0f;
-
-	bica::EllipsePtr estEllipse(new bica::Ellipse);
-	estEllipse->center = p2;
-	if (measurement) {
-		estEllipse->width = 4 * sqrt(cvmGet(ballmodel->jpdaf->objects[0]->error_cov_post, 0, 0));
-		estEllipse->length = 4 * sqrt(cvmGet(ballmodel->jpdaf->objects[0]->error_cov_post, 1, 1));
-	} else {
-		estEllipse->width = 4 * sqrt(cvmGet(ballmodel->jpdaf->objects[0]->error_cov_pre, 0, 0));
-		estEllipse->length = 4 * sqrt(cvmGet(ballmodel->jpdaf->objects[0]->error_cov_pre, 1, 1));
-	}
-	estEllipse->angle =  toDegrees(ballmodel->estimate.getAngle());
-	estEllipse->z = 0.0f;
-	estEllipse->color = bica::WHITE;
-	estEllipse->filled = true;
-	estEllipse->opacity = 125;
-	estEllipse->accKey = "b";
-	estEllipse->label = "Ball";
-	shapeList.push_back(estEllipse);
-
-	// Velocity
-	bica::Point3DPtr p3(new bica::Point3D);
-	arrow->src = p2;
-	p3->x = p2->x + ballmodel->dx;
-	p3->y = p2->y + ballmodel->dy;
-	arrow->dst = p3;
-	arrow->width = 1;
-	arrow->color = bica::ORANGE;
-	arrow->filled = false;
-	arrow->opacity = 125;
-	arrow->accKey = "b";
-	arrow->label = "";
-	shapeList.push_back(arrow);
-
-	//JPDAF
-	bica::EllipsePtr JPDAFellipse(new bica::Ellipse);
-	JPDAFellipse->center = p2;
-	if (measurement) {
-		JPDAFellipse->width = sqrt(cvmGet(ballmodel->jpdaf->error_cov_post, 0, 0));
-		JPDAFellipse->length = sqrt(cvmGet(ballmodel->jpdaf->error_cov_post, 1, 1));
-	} else {
-		JPDAFellipse->width = sqrt(cvmGet(ballmodel->jpdaf->error_cov_pre, 0, 0));
-		JPDAFellipse->length = sqrt(cvmGet(ballmodel->jpdaf->error_cov_pre, 1, 1));
-	}
-	JPDAFellipse->angle =  toDegrees(ballmodel->JPDAFestimate.getAngle());
-	JPDAFellipse->z = 0.0f;
-	JPDAFellipse->color = bica::RED;
-	JPDAFellipse->filled = true;
-	JPDAFellipse->opacity = 125;
-	JPDAFellipse->accKey = "c";
-	JPDAFellipse->label = "JPDAF";
-
-	shapeList.push_back(JPDAFellipse);
-
-
-	// Observations
-	if (measurement) {
-		list<BallSample>::iterator it;
-		int i = 0;
-
-		for ( it = balls.begin(); it != balls.end(); it++) {
-			bica::Point3DPtr p(new bica::Point3D);
-			bica::EllipsePtr ellipse(new bica::Ellipse);
-
-			p->x = (float)((*it).p3D.X);
-			p->y = (float)((*it).p3D.Y);
-			p->z = 0.0f;
-
-			ellipse->center = p;
-			ellipse->length = 4 * JPDAF::MEASUREMENT_NOISE_COV;
-			ellipse->width = 4 * JPDAF::MEASUREMENT_NOISE_COV;
-			ellipse->angle =  toDegrees(atan2((*it).p3D.Y, (*it).p3D.X));
-			ellipse->z = 0.0f;
-			ellipse->color = bica::ORANGE;
-			ellipse->filled = true;
-			ellipse->opacity = 125;
-			ellipse->accKey = "z";
-			stringstream ss;//create a stringstream
-			ss << "Z" << i + 1;
-			ellipse->label = ss.str();
-			shapeList.push_back(ellipse);
-
-			bica::LinePtr line(new bica::Line);
-			line->p1 = p1;
-			line->p2 = p;
-			line->width = 1;
-			line->color = bica::ORANGE;
-			line->filled = false;
-			line->opacity = 125;
-			line->accKey = "z";
-			line->label = "";
-			shapeList.push_back(line);
-
-			i++;
-		}
-	}
-
-	//Get the JPDAF's shape list
-	ShapeList auxList = jpdaf->getGrDebugRel();
-	//Insert the JPDAF's shape list into my shape list
-	shapeList.insert(shapeList.end(), auxList.begin(), auxList.end());
-
-	return shapeList;*/
 }
 
 VisualMemoryObjPtr
@@ -709,7 +582,6 @@ BallDetector::getVisualMemoryObject(const Ice::Current& c)
 	ball->dx = 4 * sqrt(cvmGet(ballmodel->jpdaf->objects[0]->error_cov_post, 0, 0));
 	ball->dy = 4 * sqrt(cvmGet(ballmodel->jpdaf->objects[0]->error_cov_post, 1, 1));
 
-	//cout << "Quality: " << ballmodel->estimate.getQuality() << endl;
 	ball->quality = ballmodel->estimate.getQuality();
 	ball->time = ballmodel->elapsedTimeSinceLastObs;
 	ball->reliability = ObjectState::reliability2string(ballmodel->estimate.getReliability());

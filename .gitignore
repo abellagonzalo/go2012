@@ -3,3 +3,12 @@ player/src/interfaces/cpp/*
 
 # Ignore player build dir
 player/build-*
+
+# Ignore sublime files
+*sublime-project
+*sublime-workspace
+
+# Ignore manager build dirs
+manager/jmanager/build/
+manager/jmanager/dist/
+manager/jmanager/generated-slice/

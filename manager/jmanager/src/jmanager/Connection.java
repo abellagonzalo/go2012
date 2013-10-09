@@ -54,7 +54,7 @@ public class Connection {
     public bica.BallDetectorManagerPrx ballDetectorPrx;
     public bica.GoalDetectorManagerPrx goalDetectorPrx;
     public bica.LogProviderPrx logProviderPrx;
-    private bica.AleatoryMovePrx aleatoryMovePrx;
+    // private bica.AleatoryMovePrx aleatoryMovePrx;
 // 	public bica.CalibrationBallManagerPrx calibrationballPrx;
 
 //	public bica.PruebaTextSpeechManagerPrx pruebaTextSpeechManagerPrx;
@@ -420,6 +420,7 @@ public class Connection {
         return logProviderPrx;
     }
 
+    /**
     public bica.AleatoryMovePrx getAleatoryMovePrx() throws RuntimeException {
         Ice.ObjectPrx objectPrx = null;
 
@@ -434,6 +435,7 @@ public class Connection {
         }
         return aleatoryMovePrx;
     }
+    */
 
     /*        	public bica.CalibrationBallManagerPrx getCalibrationBallManagerPrx() throws RuntimeException {
     Ice.ObjectPrx objectPrx = null;
