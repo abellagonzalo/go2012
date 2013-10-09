@@ -45,20 +45,16 @@ BallDetector::~BallDetector()
 void
 BallDetector::init(const string newName, AL::ALPtr<AL::ALBroker> parentBroker) {
 	Component::init(newName, parentBroker);
+	this->setFreqTime(SHORT_RATE);
+
 	perception = Perception::getInstance();
 	body = Body::getInstance();
 	kinematics =  Kinematics::getInstance();
 	_GTLocalization = GTLocalization::getInstance();
 	goalDetector = GoalDetector::getInstance();
 
-	this->setFreqTime(SHORT_RATE);
-
 	//For attention
 	initClient();
-
-	ballVMlog = fopen((string("/tmp/vmBall.log").c_str()), "w");
-	vmIters = 0;
-	vmMeanCycleTime = 0.0;
 }
 
 float lastMovX = 0.0;
@@ -149,27 +145,15 @@ BallDetector::step()
 	if (!isTime2Run())
 		return;
 
-	startDebugInfo();
-
 	this->detect(true);
 
 	predict_step();
 
-	long beginVMcycleTime = getCurrentTime();
 	ballmodel->predict();
 	ballmodel->updateFromOdometry();
-	long endVMcycleTime = getCurrentTime() - beginVMcycleTime;
-	vmIters++;
-	vmMeanCycleTime = ((vmMeanCycleTime * (vmIters - 1)) + endVMcycleTime) / (vmIters);
-	ostringstream s;
-	s << "[" << "Ball Visual Memory" << "] Mean cycle time of " << vmMeanCycleTime / 1000.0 << " ms.\n";
-	if(ballVMlog != NULL)
-	{
-		fprintf(ballVMlog, "%s", s.str().c_str());
-		fflush(ballVMlog);
-	}
 
 	update_step();
+
 	/*Save time*/
 	if(this->balls.size() > 0)
 	{
@@ -177,44 +161,7 @@ BallDetector::step()
 		this->lastSeen = this->getTime();
 	}
 
-
-	Vector2<double> ball = ballmodel->estimate.getPositionInRelativeCoordinates();
-
-	HPoint2D simg;
-	simg.x = ImageInput::IMG_WIDTH/2;
-	simg.y = ImageInput::IMG_HEIGHT/2;
-	simg.h = 1.0;
-	HPoint3D s3D;
-	kinematics->get3DPosition(s3D, simg);
-
-	double quality = ballmodel->estimate.getQuality();
-
-	// Log
-	beginLog();
-	addToLog ( "BallX", ComponentSnapshot::LOG_DOUBLE, ballmodel->estimate.getPositionInRelativeCoordinates().x );
-	addToLog ( "BallY", ComponentSnapshot::LOG_DOUBLE, ballmodel->estimate.getPositionInRelativeCoordinates().y );
-	addToLog ( "BallQuality", ComponentSnapshot::LOG_DOUBLE, quality );
-	addToLog ( "BallXunc", ComponentSnapshot::LOG_DOUBLE, cvmGet(ballmodel->jpdaf->objects[0]->error_cov_post, 0, 0));
-	addToLog ( "BallYunc", ComponentSnapshot::LOG_DOUBLE, cvmGet(ballmodel->jpdaf->objects[0]->error_cov_post, 1, 1));
-
-	if ( _gtReceived ) {
-		double ballX, ballY;
-		getGTBallRel( ballX, ballY );
-
-		double gtballx, gtbally;
-		getGTBallAbs( gtballx, gtbally);
-
-		addToLog ( "GTBallRelX", ComponentSnapshot::LOG_DOUBLE, ballX );
-		addToLog ( "GTBallRelY", ComponentSnapshot::LOG_DOUBLE, ballY );
-
-		addToLog ( "GTBallAbsX", ComponentSnapshot::LOG_DOUBLE, gtballx );
-		addToLog ( "GTBallAbsY", ComponentSnapshot::LOG_DOUBLE, gtbally );
-	}
-	endLog( getName() );
-
-
 	updateAP();
-	endDebugInfo();
 }
 
 void
@@ -467,10 +414,7 @@ BallDetector::checkRadius(BallSample &ball)
 void
 BallDetector::clearDetected()
 {
-	if(!this->balls.empty())
-	{
-		this->balls.clear();
-	}	
+	this->balls.clear();
 }
 
 void
@@ -502,10 +446,8 @@ BallDetector::drawDetected(IplImage* src)
 bool
 BallDetector::isSeen()
 {
-	return this->balls.size()>0;//seen();
+	return !balls.empty();
 }
-
-
 
 void
 BallDetector::predict()

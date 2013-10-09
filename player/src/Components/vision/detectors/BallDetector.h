@@ -132,10 +132,6 @@ private:
 	bool 			_gtReceived;
 
 	GoalDetector	*goalDetector;
-
-	FILE *ballVMlog;
-	long vmIters;
-	long double vmMeanCycleTime;
 };
 
 #endif /* BALLDETECTOR_H_ */
