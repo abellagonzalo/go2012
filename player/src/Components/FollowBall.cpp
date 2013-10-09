@@ -55,34 +55,6 @@ w = ctrlW->getOutput();
 l = ctrlL->getOutput();
 v = ctrlV->getOutput();
 
-cerr<<"["<<v<<","<<l<<","<<w<<"]\t("<<pos.x<<","<<pos.y<<")"<<endl;
-//cerr<<theta/M_PI<<" -> "<<w<<endl;
-
-/*
-
-	w = theta / 2.5;
-
-	if(fabs(theta)<toRadians(20.0))
-	{
-		if(rho>600.0)
-		{
-			v = 1.0;
-		}else if(rho>150.0)
-		{
-			v = rho/600.0;
-		}else
-			v = 0.0;
-	}else
-		v = 0.0;
-
-
-if(v > 1.0) v = 1.0;
-if(v < -1.0) v = -1.0;
-if(w > 1.0) w = 1.0;
-if(w < -1.0) w = -1.0;
-if(l > 1.0) l = 1.0;
-if(l < -1.0) l = -1.0;
-*/
 _Body->setVel(v,w,l);
 
 //BUILDER COMMENT. DO NOT REMOVE. end SeeingBall_state_code
@@ -111,14 +83,14 @@ else
 bool FollowBall::BallLost_transition_code(void)
 {
 //BUILDER COMMENT. DO NOT REMOVE. begin BallLost_transition_code
-return _BallDetector->ballmodel->elapsedTimeSinceLastObs > ObjectState::CURRENTLY;
+return _BallDetector->elapsedTimeSinceLastObs() > ObjectState::CURRENTLY;
 //BUILDER COMMENT. DO NOT REMOVE. end BallLost_transition_code
 }
 
 bool FollowBall::BallFound_transition_code(void)
 {
 //BUILDER COMMENT. DO NOT REMOVE. begin BallFound_transition_code
-if(_BallDetector->ballmodel->elapsedTimeSinceLastObs < ObjectState::CURRENTLY)
+if(_BallDetector->elapsedTimeSinceLastObs() < ObjectState::CURRENTLY)
 	return true;
 else
 	return false;

@@ -102,15 +102,11 @@ SharedTeamInfo::updateTeamInfo()
 		teamData[me - 1].setPosReliability("High");
 
 	//ballDetector->step();
-	teamData[me - 1].setBallDistance(
-			ballDetector->ballmodel->estimate.getDistance());
-	teamData[me - 1].setBallX(
-			ballDetector->ballmodel->estimate.getPositionInRelativeCoordinates().x);
-	teamData[me - 1].setBallY(
-			ballDetector->ballmodel->estimate.getPositionInRelativeCoordinates().y);
-	teamData[me - 1].setBallTime(
-			ballDetector->ballmodel->elapsedTimeSinceLastObs);
-	teamData[me - 1].setBallReliability(ballDetector->ballmodel->estimate.getReliabilityString());
+	teamData[me - 1].setBallDistance(ballDetector->getDistance());
+	teamData[me - 1].setBallX(ballDetector->getX());
+	teamData[me - 1].setBallY(ballDetector->getY());
+	teamData[me - 1].setBallTime(ballDetector->elapsedTimeSinceLastObs());
+	teamData[me - 1].setBallReliability(ballDetector->getReliabilityString());
 	teamData[me - 1].setTimestamp(getCurrentTime());
 
 	// Send info to the rest of teammates (Goalie not included)

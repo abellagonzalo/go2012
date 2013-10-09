@@ -76,6 +76,7 @@ public:
 	void getGTBallAbs( double &x, double &y );
 	void getGTBallRel( double &x, double &y );
 
+	long elapsedTimeSinceLastObs() const;
 	Vector2<double> getPosition() const;
 	double getX() const;
 	double getY() const;
@@ -83,6 +84,7 @@ public:
 	double getYerror() const;
 	double getQuality() const;
 	double getAngle() const;
+	double getDistance() const;
 	ObjectState::ObjectReliability getReliability() const;
 	std::string getReliabilityString() const;
 

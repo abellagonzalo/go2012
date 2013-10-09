@@ -142,28 +142,26 @@ BallDetector::step()
 {
 
 	perception->step();
-
 	body->step();
 	kinematics->step();
 
-	if (!isTime2Run())
-		return;
+	if (!isTime2Run()) return;
 
 	this->detect(true);
 
 	predict_step();
 
-	ballmodel->predict();
-	ballmodel->updateFromOdometry();
+	// ballmodel->predict();
+	// ballmodel->updateFromOdometry();
 
 	update_step();
 
 	/*Save time*/
-	if(this->balls.size() > 0)
-	{
-		updateFromObservation();
-		this->lastSeen = this->getTime();
-	}
+	// if(this->balls.size() > 0)
+	// {
+	// 	updateFromObservation();
+	// 	this->lastSeen = this->getTime();
+	// }
 
 	updateAP();
 }
@@ -495,7 +493,7 @@ BallDetector::updateFromOdometry()
 	lastBodyTh = currentBodyTh;
 }
 
-long elapsedTimeSinceLastObs() {
+long BallDetector::elapsedTimeSinceLastObs() const {
 	return currentTimestamp - lastObsTimestamp;
 }
 
@@ -521,6 +519,10 @@ double BallDetector::getYerror() const {
 
 double BallDetector::getAngle() const {
 	return atan2(getY(), getX());
+}
+
+double BallDetector::getDistance() const {
+	return getPosition().abs();
 }
 
 double BallDetector::getQuality() const {
@@ -602,9 +604,9 @@ BallDetector::getGrDebugRel()
 	shapeListRel.clear();
 
 	// Center of the nets
-	ShapeList auxList = ballmodel->getGrDebugRel();
-	//Insert the GoalsModel's shape list into my shape list
-	shapeListRel.insert(shapeListRel.end(), auxList.begin(), auxList.end());
+	// ShapeList auxList = ballmodel->getGrDebugRel();
+	// Insert the GoalsModel's shape list into my shape list
+	// shapeListRel.insert(shapeListRel.end(), auxList.begin(), auxList.end());
 
 	// Kalman ball
 	shapeListRel.push_back( ellipseFromFilter(filter) );

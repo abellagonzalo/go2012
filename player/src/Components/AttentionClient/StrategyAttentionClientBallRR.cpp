@@ -1,3 +1,4 @@
+
 #include "StrategyAttentionClientBallRR.h"
 #include "BallDetector.h"
 
@@ -16,12 +17,11 @@ StrategyAttentionClientBallRR::getAP(tapoint **ap){
 	BallDetector *_BallDetector = BallDetector::getInstance();
 
 	static int cont=0;
-	//if(ballmodel->estimate.getReliability()>=SingleObjectState::MOST_RELIABLE)
-	if(_BallDetector->ballmodel->elapsedTimeSinceLastObs<ObjectState::LONG_TIME)
+	if(_BallDetector->elapsedTimeSinceLastObs()<ObjectState::LONG_TIME)
 	{
 
 
-		Vector2<double> pos = _BallDetector->ballmodel->estimate.getPositionInRelativeCoordinates();
+		Vector2<double> pos = _BallDetector->getPosition();
 		ap_actual.x = pos[0];
 		ap_actual.y = pos[1];
 		ap_actual.z = 0.0;
@@ -43,7 +43,7 @@ StrategyAttentionClientBallRR::getAP(tapoint **ap){
 
 			if(cont++>2) //Cada tres AP veces volvemos a la última estimación
 			{
-				Vector2<double> pos = _BallDetector->ballmodel->estimate.getPositionInRelativeCoordinates();
+				Vector2<double> pos = _BallDetector->getPosition();
 				ap_actual.x = pos[0];
 				ap_actual.y = pos[1];
 				ap_actual.z = 0.0;

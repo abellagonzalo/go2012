@@ -57,7 +57,7 @@ bool SearchBall::Stopped2RotateBody0_transition_code(void)
 	ObjectState *ball =  _BallDetector->getObj();
 
 if ((getStopWatch() > 8000) ||
-	((fabs(ball->getAngle())>fromDegrees(60.0)) && (_BallDetector->ballmodel->elapsedTimeSinceLastObs < ObjectState::LONG_TIME)))
+	((fabs(ball->getAngle())>fromDegrees(60.0)) && (_BallDetector->elapsedTimeSinceLastObs() < ObjectState::LONG_TIME)))
 {
 
 	if(ball->getAngle()!=0.0)

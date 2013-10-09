@@ -160,7 +160,7 @@ return true;
 bool Striker2::SearchingBall2Going2Ball0_transition_code(void)
 {
 //BUILDER COMMENT. DO NOT REMOVE. begin SearchingBall2Going2Ball0_transition_code
-return _BallDetector->ballmodel->elapsedTimeSinceLastObs < ObjectState::RECENTLY;
+return _BallDetector->elapsedTimeSinceLastObs() < ObjectState::RECENTLY;
 //BUILDER COMMENT. DO NOT REMOVE. end SearchingBall2Going2Ball0_transition_code
 }
 
@@ -168,7 +168,7 @@ bool Striker2::Going2Ball2SearchingBall0_transition_code(void)
 {
 //BUILDER COMMENT. DO NOT REMOVE. begin Going2Ball2SearchingBall0_transition_code
 
-if(_BallDetector->ballmodel->elapsedTimeSinceLastObs > ObjectState::LONG_TIME)
+if(_BallDetector->elapsedTimeSinceLastObs() > ObjectState::LONG_TIME)
 {
 	_SearchBall->restartSearch();
 	return true;
@@ -221,9 +221,8 @@ bool Striker2::BallNear2Shoot0_transition_code(void)
 //BUILDER COMMENT. DO NOT REMOVE. begin BallNear2Shoot0_transition_code
 
 
-	if(_BallDetector->ballmodel->elapsedTimeSinceLastObs > ObjectState::RECENTLY)
+	if(_BallDetector->elapsedTimeSinceLastObs() > ObjectState::RECENTLY)
 		return false;
-	//cerr<<"Ball time is "<<_BallDetector->ballmodel->elapsedTimeSinceLastObs<<endl;
 	if(tr)
 	{
 		_Body->selKick("TXTSIDE2RSI");
@@ -275,7 +274,7 @@ return (getStopWatch()>2000);
 bool Striker2::BallNear2SearchingBall0_transition_code(void)
 {
 //BUILDER COMMENT. DO NOT REMOVE. begin BallNear2SearchingBall0_transition_code
-	if(_BallDetector->ballmodel->elapsedTimeSinceLastObs > ObjectState::LONG_TIME)
+	if(_BallDetector->elapsedTimeSinceLastObs() > ObjectState::LONG_TIME)
 	{
 		_SearchBall->restartSearch();
 		return true;

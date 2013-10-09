@@ -169,8 +169,8 @@ ALModule(pBroker, pName) {
 	localization->setLocalization("GTLocalization");
 
 	//attention->setAttention("P");
-	//attention->setAttention("RR");
-	attention->setAttention("Q");
+	attention->setAttention("RR");
+	//attention->setAttention("Q");
 
 	//Init GameController
 	GameController *gct = GameController::getInstance();

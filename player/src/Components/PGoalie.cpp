@@ -62,7 +62,7 @@ bool PGoalie::Esperar2Tirarse0_transition_code(void)
 //BUILDER COMMENT. DO NOT REMOVE. begin Esperar2Tirarse0_transition_code
 ObjectState* balls = _BallDetector->getObj();
 
-if((_BallDetector->ballmodel->elapsedTimeSinceLastObs < ObjectState::RECENTLY)&&
+if((_BallDetector->elapsedTimeSinceLastObs() < ObjectState::RECENTLY)&&
 (balls->getDistance()<1200.0))
 {
 _Body->selKick("TXTSUICIDE");

@@ -272,14 +272,12 @@ StrategyRoles::getGlobalBall(int *x, int *y)
 {
 	double myPosX,myPosY,myPosTh,ballXcart,ballYcart;
 
-	ballXcart = ballDetector->ballmodel->estimate.getPositionInRelativeCoordinates().x;
-	ballYcart = ballDetector->ballmodel->estimate.getPositionInRelativeCoordinates().y;
+	ballXcart = ballDetector->getX();
+	ballYcart = ballDetector->getY();
 
 	myPosX = sharedTeamInfo->teamData[sharedTeamInfo->getMyId() - 1].getX();
 	myPosY = sharedTeamInfo->teamData[sharedTeamInfo->getMyId() - 1].getY();
 	myPosTh = sharedTeamInfo->teamData[sharedTeamInfo->getMyId() - 1].getTheta();
-
-	//cerr << "Position (" << myPosX<<", "<<myPosY<<", "<<toDegrees(myPosTh)<<")"<<endl;
 
 	*x = (int) (myPosX + ballXcart*cos(myPosTh) - ballYcart*sin(myPosTh));
 	*y = (int) (myPosY + ballXcart*sin(myPosTh) + ballYcart*cos(myPosTh));
@@ -290,18 +288,6 @@ StrategyRoles::updateDefenderPos()
 {
 	double ownNetX = -3000, ownNetY = 0, ball2corner, alpha, dx, dy, areaCorner = 900;
 	int ballX,ballY;
-
-	//pthread_mutex_lock(&mutex);
-
-	//Si la calidad de la pelota o de la auto-localización es mala -> devolver penalty
-	/*if ((ballDetector->ballmodel->estimate.getReliability() < ObjectState::HIGH_RELIABLE) ||
-			(sharedTeamInfo->teamData[sharedTeamInfo->getMyId() - 1].getPosReliability() == "Low")) {
-		xDefender = -1800;
-		yDefender = 0;
-
-		//pthread_mutex_unlock(&mutex);
-		return;
-	}*/
 
 	getGlobalBall(&ballX,&ballY);
 
@@ -324,7 +310,6 @@ StrategyRoles::updateDefenderPos()
 		yDefender = 0;
 	}
 
-	//pthread_mutex_unlock(&mutex);
 }
 
 void
