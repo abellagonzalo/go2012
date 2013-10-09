@@ -52,24 +52,11 @@ public:
 
 	//ToDo: A fuego portería azul. Comprobar para qué se usa este método.
 	inline GoalsModel* getObj() { return goals; };
-	//inline ObjectState* getblueP0() { return &(goals->blueP0Estimate); };
-	//inline ObjectState* getblueP1() { return &(goals->blueP1Estimate); };
-
-/*	inline ObjectState* getOpponentLeft() { return goals->opponentLeftEstimate; };
-	inline ObjectState* getOpponentRight() { return goals->opponentRightEstimate; };
-	inline ObjectState* getOwnLeft() { return goals->ownLeftEstimate; };
-	inline ObjectState* getOwnRight() { return goals->ownRightEstimate; };
-	inline ObjectState* getBlueLeft() { return goals->getBlueLeft(); };
-	inline ObjectState* getBlueRight() { return goals->getBlueRight(); };
-	inline ObjectState* getYellowLeft() { return goals->getYellowLeft(); };
-	inline ObjectState* getYellowRight() { return goals->getYellowRight(); };
-	//bool seen() { return  this->goal.found && (this->goal.type != GOAL_NOT_FOUND);};
-	*/
 	bool isSeen();
 
 
-	float getObjX();// {return 2.0*((getBall()->p2D.x - ImageInput::IMG_WIDTH/2.0)/(ImageInput::IMG_WIDTH));};
-	float getObjY();// {return 2.0*((getBall()->p2D.y - ImageInput::IMG_HEIGHT/2.0)/(ImageInput::IMG_HEIGHT));};
+	float getObjX();
+	float getObjY();
 
 	bica::ShapeList getGrDebugRel();
 
@@ -90,8 +77,6 @@ public:
 
 
 private:
-	//void updateFromObservation();
-	//void updateFromOdometry();
 
 	/*Search the goal of a color and return the type of goal found*/
 	int searchGoal(int color, GoalPostSample * posts);

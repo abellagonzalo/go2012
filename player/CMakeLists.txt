@@ -135,6 +135,10 @@ src/lib/estimation/SingleObjectModel.h src/lib/estimation/SingleObjectModel.cpp
 src/lib/estimation/GoalsModel.h src/lib/estimation/GoalsModel.cpp
 src/lib/estimation/RobotModel.h src/lib/estimation/RobotModel.cpp
 src/lib/estimation/kalman/Kalman.h src/lib/estimation/kalman/Kalman.cpp
+
+src/lib/estimation/kalman/classic_matrices.cpp
+src/lib/estimation/kalman/Matrix.cpp
+
 src/lib/estimation/JPDAF.h src/lib/estimation/JPDAF.cpp
 src/lib/log/ComponentSnapshot.h src/lib/log/ComponentSnapshot.cpp
 src/Components/vision/detectors/Detector.cpp src/Components/vision/detectors/Detector.h

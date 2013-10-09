@@ -85,15 +85,6 @@ SingleObjectModel::updateFromObservation(list<AbstractSample> features)
 	elapsed = now - lastMeasurement;
 	lastMeasurement = now;
 
-	// Velocity
-	/*dx = object.X - lastPos.x;
-	dy = object.Y - lastPos.y;
-	double velX = dx * 1000000.0f / elapsed;
-	double velY = dy * 1000000.0f / elapsed;
-	cout << "Desplazamiento (" << dx << "," << dy << " mm.) (" <<
-			velX << "," << velY << " mm/s)\n";
-	cout << "Elapsed: " << elapsed / 1000000.0f << " segundos";*/
-
 	// The object has been detected
 	elapsedTimeSinceLastObs = 0.0f;
 

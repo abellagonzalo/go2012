@@ -15,6 +15,10 @@
 #include "BallDetector.h"
 #include "Kinematics.h"
 
+#include <iterator>
+#include "estimation/kalman/kalman.h"
+
+
 const float BallDetector::MIN_VALID_RATIO = 0.8;
 const float BallDetector::BALL_RADIUS = 32.5;
 const float BallDetector::MIN_VALID_RATIO_RADIUS = 0.7;
@@ -57,6 +61,82 @@ BallDetector::init(const string newName, AL::ALPtr<AL::ALBroker> parentBroker) {
 	vmMeanCycleTime = 0.0;
 }
 
+float lastMovX = 0.0;
+float lastMovY = 0.0;
+float lastMovTh = 0.0;
+
+kalman::algorithm::MatrixCMPair filter = kalman::algorithm::pair_generator();
+
+struct Prediction {
+	double x, y, theta, time, mobility, friction;
+};
+
+kalman::matrices::MatrixCM predictionToMatrix(Prediction pred) {
+	double data [6] = {pred.x, pred.y, pred.theta, pred.time, pred.mobility, pred.friction};
+	return kalman::matrices::MatrixCM(6, 1, data);
+}
+
+void BallDetector::predict_step() {
+	// std::cerr << "predict_step" << std::endl;
+	float movX, movY, movTh;
+	body->getRelativeMovement(lastBodyX, lastBodyY, lastBodyTh, movX, movY, movTh);
+	body->getGlobalMovement(lastBodyX, lastBodyY, lastBodyTh);
+
+	Prediction prediction = {movX, movY, movTh, perception->getImageTs(), 0, .95};
+	Prediction noise = {.01, .01, 3.1416/3600., 0, 3., .01};
+
+	filter = kalman::algorithm::predict(filter, predictionToMatrix(prediction), predictionToMatrix(noise));
+}
+
+std::ostream& operator<<(std::ostream &output, const HPoint2D& p) {
+	output << "{" << p.x << ", " << p.y << ", " << p.h << "}";
+	return output;
+}
+
+std::ostream& operator<<(std::ostream &output, const HPoint3D& p) {
+	output << "{" << p.X << ", " << p.Y << ", " << p.Z << ", " << p.H << "}";
+	return output;
+}
+
+std::ostream& operator<<(std::ostream &output, const AbstractSample& as) {
+  output << "n=" << as.n <<" timestamp=" << as.timestamp << " size=" << as.size 
+  			 << " p2D=" << as.p2D << " p3D=" << as.p3D;
+  return output;
+}
+
+std::ostream& operator<<( std::ostream &output, const BallSample& bs) {
+	output << (AbstractSample)bs << " ratio=" << bs.ratio << " radius=" << bs.radius
+				 << " radius_expected=" << bs.radius_expected;
+	return output;
+}
+
+struct Observation {
+	double x, y;
+};
+
+kalman::matrices::MatrixCM observationToMatrix(Observation obs) {
+	double data [2] = {obs.x, obs.y};
+	return kalman::matrices::MatrixCM(2, 1, data);
+}
+
+void BallDetector::update_step() {
+	// std::cerr << "Ball update" << std::endl;
+	// std::ostream_iterator<BallSample> out_it (std::cout, "\n");
+	// std::copy(balls.begin(), balls.end(), out_it);
+
+	if (balls.empty()) return;
+	//std::cerr << "update_step" << std::endl;
+
+	std::list<BallSample>::iterator ball = balls.begin();
+	Observation observation = {ball->p3D.X, ball->p3D.Y};
+	Observation noise = {1., 1.};
+
+	filter = kalman::algorithm::update(filter, observationToMatrix(observation), observationToMatrix(noise));
+
+	// filter.first.print();
+	// filter.second.print();
+}
+
 void
 BallDetector::step()
 {
@@ -73,19 +153,15 @@ BallDetector::step()
 
 	this->detect(true);
 
-	ostringstream s;
+	predict_step();
 
 	long beginVMcycleTime = getCurrentTime();
 	ballmodel->predict();
 	ballmodel->updateFromOdometry();
-
-	kalman::Prediction pred;
-	kalman::Odometry odo;
-	myKalman.predict(pred, odo);
-
 	long endVMcycleTime = getCurrentTime() - beginVMcycleTime;
 	vmIters++;
 	vmMeanCycleTime = ((vmMeanCycleTime * (vmIters - 1)) + endVMcycleTime) / (vmIters);
+	ostringstream s;
 	s << "[" << "Ball Visual Memory" << "] Mean cycle time of " << vmMeanCycleTime / 1000.0 << " ms.\n";
 	if(ballVMlog != NULL)
 	{
@@ -93,15 +169,14 @@ BallDetector::step()
 		fflush(ballVMlog);
 	}
 
+	update_step();
 	/*Save time*/
 	if(this->balls.size() > 0)
 	{
 		updateFromObservation();
-
-		kalman::Observation obs;
-		myKalman.update(obs);
 		this->lastSeen = this->getTime();
 	}
+
 
 	Vector2<double> ball = ballmodel->estimate.getPositionInRelativeCoordinates();
 
@@ -161,11 +236,8 @@ BallDetector::validateBalls()
 	BallSample ballSample;
 	bool removeBall;
 	list<BallRegion*> * bregions = _RegionBuilder->getBallRegions();
-	//cout<<"n regiones: "<<bregions->size()<<endl;
 
 	for(list<BallRegion*>::iterator ball = bregions->begin(); ball != bregions->end(); ball++) {
-
-		//std::cout << "validamos en balldetector" << std::endl;
 
 		/*Calculate the ball radius if the ball is valid*/
 		if(!this->getBallRadius(*ball, ballSample))
@@ -174,18 +246,12 @@ BallDetector::validateBalls()
 		/*Get expected radius*/
 		this->getExpectedRadius(ballSample);
 
-		//std::cout << "miramos expected radius" << std::endl;
-
 		/*Check difference between radius and expected radius*/
 		if(!this->checkRadius(ballSample))
 			continue;
 
-		//std::cout << "balon validado" << std::endl;
-
 		this->balls.push_back(ballSample);
 	}
-
-	//std::cout << "tenemos al final: " << this->balls.size() << std::endl;
 
 	/*Check balls in the same position*/
 	if(this->balls.size() >= 2) {
@@ -285,26 +351,6 @@ BallDetector::getBallRadius(BallRegion* ballRegion, BallSample &ball)
 		return false;
 
 	return this->saveValues(ballRegion, diag1, drow, std::max(sum1, sum2), std::max(sum3, sum4), ball);
-
-	// if(sum3 > sum4) {
-	// 	if(sum1 > sum2) {
-	// 		/*Save the values in the ball*/
-	// 		return this->saveValues(ballRegion, diag1, drow, sum1, sum3, ball);
-	// 	} else {
-	// 		/*Save the values in the ball*/
-	// 		return this->saveValues(ballRegion, dcol, diag1, sum2, sum3, ball);
-	// 	}
-	// } else {
-	// 	if(sum1 > sum2) {
-	// 		/*Save the values in the ball*/
-	// 		return this->saveValues(ballRegion, -1*diag2, drow, sum1, sum4, ball);
-	// 	} else {
-	// 		/*Save the values in the ball*/
-	// 		return this->saveValues(ballRegion, dcol, diag2, sum2, sum4, ball);
-	// 	}
-	// }
-
-	// return false;
 }
 
 bool
@@ -325,10 +371,6 @@ BallDetector::saveValues(BallRegion* ballRegion, int col, int row, int sum1, int
 
 	/*Get the radius*/
 	ball.radius = ((float)(std::max(sum1, sum2)))/2.0;
-	// if(sum1 > sum2)
-	// 	ball.radius = ((float)sum1)/2.0;
-	// else
-	// 	ball.radius = ((float)sum2)/2.0;
 
 	return true;	
 }
@@ -476,32 +518,22 @@ BallDetector::updateFromObservation()
 {
 	list<BallSample>::iterator ball = this->balls.begin();
 
-	//ballmodel->updateFromObservation((*ball).p3D);
-
 	lastBallTimestamp = getCurrentTime();
 
 	list<AbstractSample> features;
 	for (unsigned i = 0; i < this->balls.size(); i++ ) {
 		BallSample z = (*ball);
 		AbstractSample *as = dynamic_cast<BallSample*>(&z);
-		//cout << "BallSample (" << z.p3D.X << "," << z.p3D.Y << ") Abstract " <<
-		//		as->p3D.X << "," << as->p3D.Y << ")(" << z.p2D.x << "," <<
-		//		z.p2D.y << ")\n";
 		features.push_back( *as );
 		ball++;
 	}
 
 	ballmodel->updateFromObservation( features );
-	//jpdaf->correct( features );
 }
 
 void
 BallDetector::updateFromOdometry()
 {
-	//predict();
-
-	//jpdaf->correctFromOdometry();
-
 	// Calculate movement from last step
 	float movX, movY, movA, currentBodyX, currentBodyY, currentBodyTh, dx, dy;
 
@@ -515,11 +547,6 @@ BallDetector::updateFromOdometry()
 	lastBodyX = currentBodyX;
 	lastBodyY = currentBodyY;
 	lastBodyTh = currentBodyTh;
-
-	if (movX != 0 || movY != 0 || movA != 0) {	// There has been some movement
-
-		//ballmodel->updateFromOdometry(dx, dy, movA);
-	}
 }
 
 
@@ -542,6 +569,21 @@ BallDetector::getGrDebugAbs()
 	return shapeListAbs;
 }
 
+bica::EllipsePtr ellipseFromFilter(const kalman::algorithm::MatrixCMPair& filter) {
+	bica::Point3DPtr p(new bica::Point3D( filter.first.e(0,0), filter.first.e(1,0), 0.0f ));
+	bica::EllipsePtr estEllipse(new bica::Ellipse);
+	estEllipse->center = p;
+	estEllipse->width =  std::max( 80., 4 * sqrt(filter.second.e(0,0)) );
+	estEllipse->length = std::max( 80., 4 * sqrt(filter.second.e(1,1)) );
+	estEllipse->angle =  toDegrees( atan2(filter.first.e(1,0), filter.first.e(0,0)) );
+	estEllipse->z = 0.0f;
+	estEllipse->color = bica::ORANGE;
+	estEllipse->filled = true;
+	estEllipse->opacity = 125;
+	estEllipse->accKey = "o";
+	estEllipse->label = "KalmanBall";
+	return estEllipse;
+}
 
 bica::ShapeList
 BallDetector::getGrDebugRel()
@@ -552,6 +594,9 @@ BallDetector::getGrDebugRel()
 	ShapeList auxList = ballmodel->getGrDebugRel();
 	//Insert the GoalsModel's shape list into my shape list
 	shapeListRel.insert(shapeListRel.end(), auxList.begin(), auxList.end());
+
+	// Kalman ball
+	shapeListRel.push_back( ellipseFromFilter(filter) );
 
 	// Ground truth
 	if (_gtReceived) {
@@ -629,17 +674,9 @@ BallDetector::setGTBallAbs( double x, double y, const Ice::Current& c ) {
 void
 BallDetector::setGTBallAbs( double x, double y )
 {
-	GameController *gc = GameController::getInstance();
-
 	_gtReceived = true;
-
-	//	if (gc->getMyColor() == TEAM_BLUE) {
 	this->_gtBallX = x;
-	//		this->_gtBallY = -1 * y;
-	//	} else {
-	//		this->_gtBallX = -1 * x;
 	this->_gtBallY = y;
-	//	}
 }
 
 void

@@ -20,25 +20,9 @@ GoalsModel::GoalsModel()
 
 	p0l = p0r = p1l = p1r = 0;
 
-	//this->blueJPDAF = new JPDAF (JPDAF::STATIC_OBJ, 2, 3);
 	this->yellowJPDAF = new JPDAF (JPDAF::STATIC_OBJ, 4, 4);
 
-	/*if (gameController->getMyColor() == TEAM_BLUE) {	// Blue team
-		cout << "Según GameController, soy azul\n";
-		opponentJPDAF = yellowJPDAF;
-		ownJPDAF = blueJPDAF;
-	} else {				// Red team
-		cout << "Según GameController, soy rojo\n";
-		opponentJPDAF = blueJPDAF;
-		ownJPDAF = yellowJPDAF;
-	}
-
-	fitPosts(OPPONENT);
-	fitPosts(OWN);*/
-
 	updateEstimate();
-	//fitNets();
-	//updateEstimate();
 
 	// Time elapsed since last net observations
 	p0ElapsedTimeSinceLastObs = ObjectState::NEVER;
@@ -103,13 +87,6 @@ GoalsModel::updateEstimate()
 float
 GoalsModel::calculateSingleObjectQuality( int object )
 {
-	/*JPDAF *jpdaf;
-
-	if (net == OPPONENT)
-		jpdaf = opponentJPDAF;
-	else
-		jpdaf = ownJPDAF;*/
-
 	float a = 4 * sqrt(cvmGet(this->yellowJPDAF->objects[object]->error_cov_post, 0, 0));
 	float b = 4 * sqrt(cvmGet(this->yellowJPDAF->objects[object]->error_cov_post, 1, 1));
 	float area = pi * a * b;
@@ -482,39 +459,12 @@ GoalsModel::fitNets()
 		p1NetCenterEstimate.setPositionAndVelocityInRelativeCoordinates(
 				Vector2<double>(int2.X,int2.Y));
 
-		// Incompleto
-		/*// Move posts
-		HPoint3D circunf_center2 = {int1.x, int1.y, 0.0f, 1.0f};
-		calcNormalVector2D(int1, int2, int1, v2);
-		calIntersectionCircleVector( v2, circunf_center2, GOAL_POSTS_DISTANCE / 2.0f, int3, int4 );
-
-		if (calcDistance3D(int3, p0_3D) < calcDistance3D(int4, p0_3D)){
-			// Set the mean of estimation 0
-			cvmSet(this->yellowJPDAF->objects[p0]->state_post, 0, 0, int1.X);
-			cvmSet(this->yellowJPDAF->objects[p0]->state_post, 1, 0, int1.Y);
-			// Set the mean of estimation 1
-			cvmSet(this->yellowJPDAF->objects[p1]->state_post, 0, 0, int2.X);
-			cvmSet(this->yellowJPDAF->objects[p1]->state_post, 1, 0, int2.Y);
-		} else {
-			// Set the mean of estimation 0
-			cvmSet(this->yellowJPDAF->objects[p0]->state_post, 0, 0, int2.X);
-			cvmSet(this->yellowJPDAF->objects[p0]->state_post, 1, 0, int2.Y);
-			// Set the mean of estimation 1
-			cvmSet(this->yellowJPDAF->objects[p1]->state_post, 0, 0, int1.X);
-			cvmSet(this->yellowJPDAF->objects[p1]->state_post, 1, 0, int1.Y);
-		}*/
-
 	} else {
 		p0NetCenterEstimate.setPositionAndVelocityInRelativeCoordinates(
 				Vector2<double>(int2.X,int2.Y));
 		p1NetCenterEstimate.setPositionAndVelocityInRelativeCoordinates(
 				Vector2<double>(int1.X,int1.Y));
 	}
-
-
-
-	//fitPosts(P0);
-	//fitPosts(P1);
 }
 
 void
@@ -554,11 +504,7 @@ void
 GoalsModel::predict()
 {
 	this->yellowJPDAF->predict();
-	//ownJPDAF->predict();
-
 	updateEstimate();
-	//fitNets();
-	//updateEstimate();
 
 	// Time elapsed since last net observations
 	p0ElapsedTimeSinceLastObs = (getCurrentTime() - p0LastMeasurement) / 1000.0f;
@@ -572,70 +518,9 @@ GoalsModel::updateFromObservation(int color, list<AbstractSample> features)
 
 	this->yellowJPDAF->correct( features );
 
-	/*// Posts estimation
-	p0Estimate->setPositionAndVelocityInRelativeCoordinates(
-			Vector2<double>(cvmGet(jpdaf->objects[0]->state_post, 0, 0),
-					cvmGet(jpdaf->objects[0]->state_post, 1, 0)));
-	p0Estimate->setQuality( calculateSingleObjectQuality(goalType, 0) );
-	updatePostReliability(p0Estimate);
-
-	p1Estimate->setPositionAndVelocityInRelativeCoordinates(
-			Vector2<double>(cvmGet(jpdaf->objects[1]->state_post, 0, 0),
-					cvmGet(jpdaf->objects[1]->state_post, 1, 0)));
-	p1Estimate->setQuality( calculateSingleObjectQuality(goalType, 1) );
-	updatePostReliability(p1Estimate);
-
-	// Update left and right posts
-	if ((((p0Estimate->getAngle() < 0) && (p1Estimate->getAngle() >= 0)) ||
-			((p0Estimate->getAngle() >= 0) && (p1Estimate->getAngle() < 0))) &&
-			(fabs(p0Estimate->getAngle()) > toRadians(90.0f))){
-		if (p0Estimate->getAngle() < p1Estimate->getAngle()) {
-			leftEstimate = p0Estimate;
-			rightEstimate = p1Estimate;
-		} else {
-			leftEstimate = p1Estimate;
-			rightEstimate = p0Estimate;
-		}
-	}else{
-
-		if (p0Estimate->getAngle() < p1Estimate->getAngle()) {
-			leftEstimate = p1Estimate;
-			rightEstimate = p0Estimate;
-		} else {
-			leftEstimate = p0Estimate;
-			rightEstimate = p1Estimate;
-		}
-	}*/
-
-	/*if (leftEstimate == p0Estimate) {
-		cout << "Izquierda en nodo 0 y derecha en nodo 1\n";
-	} else {
-		cout << "Izquierda en nodo 1 y detecha en nodo 0\n";
-	}*/
-
-	// Estimation (object seen or not seen)
-	/*int centerX, centerY;
-	getGoalCenter(goalType, &centerX, &centerY);
-	netCenterEstimate->setPositionAndVelocityInRelativeCoordinates(
-			Vector2<double>(centerX,centerY));
-	netCenterEstimate->setQuality( calculateNetQuality(goalType) );
-	netCenterEstimate->setReliability( calculateNetReliability(goalType) );*/
-
-	// Testing: move the estimations respect the center of the net
-	//fitPosts(goalType);
-
-	//fitNets();
 	updateEstimate();
 
-	// The object has been detected
-	//*elapsedTimeSinceLastObs = 0.0f;
-
-	// Refresh the timestamp
-	//*lastMeasurement = getCurrentTime();
-
-
 	//Veo una portería
-
 	if((p0LeftEstimate.getReliability() == ObjectState::MOST_RELIABLE) &&
 	   (p0RightEstimate.getReliability() == ObjectState::MOST_RELIABLE) &&
 	   (p1LeftEstimate.getReliability() == ObjectState::MOST_RELIABLE) &&
@@ -657,167 +542,6 @@ GoalsModel::updateFromObservation(int color, list<AbstractSample> features)
 
 }
 
-/*void
-GoalsModel::updateFromObservation(GoalSample feature)
-{
-	ObjectState *netCenterEstimate;
-	ObjectState *p0Estimate;
-	ObjectState *p1Estimate;
-	ObjectState *leftEstimate;
-	ObjectState *rightEstimate;
-	long *elapsedTimeSinceLastObs;
-	long *lastMeasurement;
-	JPDAF *jpdaf;
-	GoalType goalType;
-	int leftPost, rightPost;
-
-	if (((feature.color == ImageInput::CBLUE) && (gameController->getMyColor() == TEAM_RED)) ||
-			((feature.color == ImageInput::CYELLOW) && (gameController->getMyColor() == TEAM_BLUE))){
-		jpdaf = opponentJPDAF;
-		goalType = OPPONENT;
-		netCenterEstimate = &opponentNetCenterEstimate;
-		p0Estimate = &opponentP0Estimate;
-		p1Estimate = &opponentP1Estimate;
-		leftEstimate = opponentLeftEstimate;
-		rightEstimate = opponentRightEstimate;
-		elapsedTimeSinceLastObs = &opponentElapsedTimeSinceLastObs;
-		lastMeasurement = &opponentLastMeasurement;
-	} else {
-		jpdaf = ownJPDAF;
-		goalType = OWN;
-		netCenterEstimate = &ownNetCenterEstimate;
-		p0Estimate = &ownP0Estimate;
-		p1Estimate = &ownP1Estimate;
-		leftEstimate = ownLeftEstimate;
-		rightEstimate = ownRightEstimate;
-		elapsedTimeSinceLastObs = &ownElapsedTimeSinceLastObs;
-		lastMeasurement = &ownLastMeasurement;
-	}
-
-	// Check if left post is JPDAF object 0 or 1
-	if ((((p0Estimate->getAngle() < 0) && (p1Estimate->getAngle() >= 0)) ||
-			((p0Estimate->getAngle() >= 0) && (p1Estimate->getAngle() < 0))) &&
-			(fabs(p0Estimate->getAngle()) > toRadians(90.0f))){
-		if (p0Estimate->getAngle() < p1Estimate->getAngle()) {
-			leftPost = 0;
-			rightPost = 1;
-		} else {
-			leftPost = 1;
-			rightPost = 0;
-		}
-	}else{
-
-		if (p0Estimate->getAngle() < p1Estimate->getAngle()) {
-			leftPost = 1;
-			rightPost = 0;
-		} else {
-			leftPost = 0;
-			rightPost = 1;
-		}
-	}
-
-	// Post observations
-	GoalPostSample z;
-	AbstractSample *as;
-
-	switch(feature.type){
-	case GOAL_LEFT_POST:
-		//cout << "(Sólo poste izq), modo " << leftPost << endl;
-		z = (*(feature.post1));
-		as = dynamic_cast<GoalPostSample*>(&z);
-		this->yellowJPDAF->correct( *as, leftPost );
-		break;
-	case GOAL_RIGHT_POST:
-		//cout << "(Sólo poste der), modo " << rightPost << endl;
-		z = (*(feature.post1));
-		as = dynamic_cast<GoalPostSample*>(&z);
-		this->yellowJPDAF->correct( *as, rightPost );
-		break;
-	case GOAL_COMPLETE:
-		//cout << "(Ambos postes)\n";
-		z = (*(feature.post1));
-		as = dynamic_cast<GoalPostSample*>(&z);
-		if (z.type == GOAL_LEFT_POST){
-			//cout << "Corrigiendo JPDAF (poste izq), modo " << leftPost << endl;
-			this->yellowJPDAF->correct( *as, leftPost );
-		} else {
-			//cout << "Corrigiendo JPDAF (poste der), modo " << rightPost << endl;
-			this->yellowJPDAF->correct( *as, rightPost );
-		}
-
-		z = (*(feature.post2));
-		as = dynamic_cast<GoalPostSample*>(&z);
-		if (z.type == GOAL_LEFT_POST) {
-			//cout << "Corrigiendo JPDAF (poste izqz), modo " << leftPost << endl;
-			this->yellowJPDAF->correct( *as, leftPost );
-		} else {
-			//cout << "Corrigiendo JPDAF (poste der), modo " << rightPost << endl;
-			this->yellowJPDAF->correct( *as, rightPost );
-		}
-		break;
-	default:
-		cout << "GoalsModel::updateFromObservation() Incorrect non ambiguous observation received (" <<
-		feature.type << ")\n";
-		return;
-	}
-
-	// Posts estimation
-	p0Estimate->setPositionAndVelocityInRelativeCoordinates(
-			Vector2<double>(cvmGet(jpdaf->objects[0]->state_post, 0, 0),
-					cvmGet(jpdaf->objects[0]->state_post, 1, 0)));
-	p0Estimate->setQuality( calculateSingleObjectQuality(goalType, 0) );
-	updatePostReliability(p0Estimate);
-
-	p1Estimate->setPositionAndVelocityInRelativeCoordinates(
-			Vector2<double>(cvmGet(jpdaf->objects[1]->state_post, 0, 0),
-					cvmGet(jpdaf->objects[1]->state_post, 1, 0)));
-	p1Estimate->setQuality( calculateSingleObjectQuality(goalType, 1) );
-	updatePostReliability(p1Estimate);
-
-	// Update left and right posts
-	if ((((p0Estimate->getAngle() < 0) && (p1Estimate->getAngle() >= 0)) ||
-			((p0Estimate->getAngle() >= 0) && (p1Estimate->getAngle() < 0))) &&
-			(fabs(p0Estimate->getAngle()) > toRadians(90.0f))){
-		if (p0Estimate->getAngle() < p1Estimate->getAngle()) {
-			leftEstimate = p0Estimate;
-			rightEstimate = p1Estimate;
-		} else {
-			leftEstimate = p1Estimate;
-			rightEstimate = p0Estimate;
-		}
-	}else{
-
-		if (p0Estimate->getAngle() < p1Estimate->getAngle()) {
-			leftEstimate = p1Estimate;
-			rightEstimate = p0Estimate;
-		} else {
-			leftEstimate = p0Estimate;
-			rightEstimate = p1Estimate;
-		}
-	}
-
-	// Center net estimation
-	int centerX, centerY;
-	getGoalCenter(goalType, &centerX, &centerY);
-	netCenterEstimate->setPositionAndVelocityInRelativeCoordinates(
-			Vector2<double>(centerX,centerY));
-	netCenterEstimate->setQuality( calculateNetQuality(goalType) );
-	netCenterEstimate->setReliability( calculateNetReliability(goalType) );
-
-	// Testing: move the estimations respect the center of the net
-	//fitPosts(goalType);
-
-	//fitNets();
-	updateEstimate();
-
-	// The object has been detected
-	//*elapsedTimeSinceLastObs = 0.0f;
-
-	// Refresh the timestamp
-	//*lastMeasurement = getCurrentTime();
-}*/
-
-
 void
 GoalsModel::updateFromOdometry()
 {
@@ -836,21 +560,11 @@ GoalsModel::updateFromOdometry()
 bica::ShapeList
 GoalsModel::getGrDebugRel()
 {
-	//pthread_mutex_lock(&(blueJPDAF->mutex));
 	pthread_mutex_lock(&(yellowJPDAF->mutex));
 
 	JPDAF *jpdaf = yellowJPDAF;
-	//ObjectState *center;
 	bica::ColorType color = bica::YELLOW;
 	string key = "y", label;
-	//unsigned leftPost, rightPost;
-
-	/*if (gameController->getMyColor() == TEAM_BLUE)
-		cout << "Mi color es: azul\n";
-	else if (gameController->getMyColor() == TEAM_RED)
-		cout << "Mi color es: rojo\n";
-	else
-		cout << "NO ESTÁ CLARO MI COLOR!!!\n";*/
 
 	shapeListRel.clear();
 
@@ -858,45 +572,6 @@ GoalsModel::getGrDebugRel()
 	ShapeList auxList = yellowJPDAF->getGrDebugRel();
 	//Insert the JPDAF's shape list into my shape list
 	shapeListRel.insert(shapeListRel.end(), auxList.begin(), auxList.end());
-
-	/*for (int n = 0; n < 2; n++) { // Num goals
-		if (n == 0) {
-			jpdaf = opponentJPDAF;
-
-			if (opponentLeftEstimate == &opponentP0Estimate){
-				leftPost = 0;
-				rightPost = 1;
-			} else {
-				leftPost = 1;
-				rightPost = 0;
-			}
-
-			if (gameController->getMyColor() == TEAM_BLUE)
-				color = bica::YELLOW;
-			else
-				color = bica::BLUE;
-			key = "o";	// Atack
-			label = "Opp";
-			center = &opponentNetCenterEstimate;
-		} else {
-			jpdaf = ownJPDAF;
-
-			if (ownLeftEstimate == &ownP0Estimate){
-				leftPost = 0;
-				rightPost = 1;
-			} else {
-				leftPost = 1;
-				rightPost = 0;
-			}
-
-			if (gameController->getMyColor() == TEAM_BLUE)
-				color = bica::BLUE;
-			else
-				color = bica::YELLOW;
-			key = "d";	// Defend
-			label = "Own";
-			center = &ownNetCenterEstimate;
-		}*/
 
 	// Frustum
 	vector<HPoint3D> frustumCorners(4);
@@ -1018,8 +693,6 @@ GoalsModel::getGrDebugRel()
 			label = "P1R(";
 		} else
 			label = "Wrong label!";
-		//ss << label;// << "L";
-		//else
 		ss << label << i << ")";
 		estEllipse->label = ss.str();
 		shapeListRel.push_back(estEllipse);
@@ -1061,73 +734,6 @@ GoalsModel::getGrDebugRel()
 	return shapeListRel;
 }
 
-/*
-ObjectState*
-GoalsModel::getBlueLeft()
-{
-	if (opponentJPDAF == blueJPDAF)
-		return opponentLeftEstimate;
-	else
-		return ownLeftEstimate;
-}
-
-ObjectState*
-GoalsModel::getBlueRight()
-{
-	if (opponentJPDAF == blueJPDAF)
-		return opponentRightEstimate;
-	else
-		return ownRightEstimate;
-}
-
-ObjectState*
-GoalsModel::getYellowLeft()
-{
-	if (opponentJPDAF == blueJPDAF)
-		return ownLeftEstimate;
-	else
-		return opponentLeftEstimate;
-}
-
-ObjectState*
-GoalsModel::getYellowRight()
-{
-	if (opponentJPDAF == blueJPDAF)
-		return ownRightEstimate;
-	else
-		return opponentRightEstimate;
-}
-
-long
-GoalsModel::getOwnElapsedTimeSinceLastObs()
-{
-	return ownElapsedTimeSinceLastObs;
-}
-
-long
-GoalsModel::getOpponentElapsedTimeSinceLastObs()
-{
-	return opponentElapsedTimeSinceLastObs;
-}
-
-long
-GoalsModel::getBlueElapsedTimeSinceLastObs()
-{
-	if (opponentJPDAF == blueJPDAF)
-		return opponentElapsedTimeSinceLastObs;
-	else
-		return ownElapsedTimeSinceLastObs;
-}
-
-long
-GoalsModel::getYellowElapsedTimeSinceLastObs()
-{
-	if (opponentJPDAF == blueJPDAF)
-		return ownElapsedTimeSinceLastObs;
-	else
-		return opponentElapsedTimeSinceLastObs;
-}
-*/
 float
 GoalsModel::evaluatePosts (int *posts)
 {
@@ -1265,7 +871,5 @@ GoalsModel::labelPosts(int &p0l, int &p0r, int &p1l, int &p1r)
 	p0r = mask[1] - 1;
 	p1l = mask[2] - 1;
 	p1r = mask[3] - 1;
-
-	//cout << "Best: " << p0l << "," << p0r << "," << p1l << "," << p1r << endl;
 
 }

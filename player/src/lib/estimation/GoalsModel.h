@@ -68,43 +68,9 @@ public:
 	void predict();
 	void updateFromOdometry();
 	void updateFromObservation(int color, list<AbstractSample> features);
-	//void updateFromObservation(GoalSample feature);
 	bica::ShapeList getGrDebugRel();
 	void generateVirtualNet(HPoint3D p0, HPoint3D p1, HPoint3D &vp0, HPoint3D &vp1 );
 
-/*	ObjectState* getBlueLeft();
-	ObjectState* getBlueRight();
-	ObjectState* getYellowLeft();
-	ObjectState* getYellowRight();
-	ObjectState* getOwnLeft() {return ownLeftEstimate;};
-	ObjectState* getOwnRight() {return ownRightEstimate;};
-	ObjectState* getOpponentLeft() {return opponentLeftEstimate;};
-	ObjectState* getOpponentRight() {return opponentRightEstimate;};
-
-	long getBlueElapsedTimeSinceLastObs();
-	long getYellowElapsedTimeSinceLastObs();
-	long getOwnElapsedTimeSinceLastObs();
-	long getOpponentElapsedTimeSinceLastObs();
-*/
-	/** The state of the object estimated from own observations;
-	      it is propagated even if the object is not seen */
-
-	//ToDo: Remove
-/*	ObjectState opponentNetCenterEstimate;
-	ObjectState ownNetCenterEstimate;
-*/
-
-	//ToDo: Remove
-	/** Post estimations of each net */
-/*	ObjectState *opponentLeftEstimate;
-	ObjectState *opponentRightEstimate;
-	ObjectState opponentP0Estimate;
-	ObjectState opponentP1Estimate;
-	ObjectState *ownLeftEstimate;
-	ObjectState *ownRightEstimate;
-	ObjectState ownP0Estimate;
-	ObjectState ownP1Estimate;
-*/
 	// New interface
 	ObjectState p0NetCenterEstimate;
 	ObjectState p1NetCenterEstimate;
@@ -116,9 +82,6 @@ public:
 
 
 	/** Number of miliseconds since the last observation */
-	/*long opponentElapsedTimeSinceLastObs;
-	long ownElapsedTimeSinceLastObs;
-*/
 	long p0ElapsedTimeSinceLastObs;
 	long p1ElapsedTimeSinceLastObs;
 
@@ -168,8 +131,6 @@ private:
 	}
 
 	struct timeval 	currentTime;
-//	long opponentLastMeasurement;
-//	long ownLastMeasurement;
 
 	long p0LastMeasurement;
 	long p1LastMeasurement;

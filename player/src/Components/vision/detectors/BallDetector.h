@@ -29,7 +29,6 @@
 #include "GTLocalization.h"
 #include "vision/detectors/GoalDetector.h"
 #include "BallAttentionClient.h"
-#include "estimation/kalman/Kalman2D.h"
 
 class Perception;
 class GoalDetector;
@@ -55,15 +54,10 @@ public:
 
 	void detect(bool debug);
 
-	list<BallSample> * getBalls() {return &(this->balls);};
-
-	BallSample *getBall() {if (this->balls.size()>0) return &(*(this->balls.begin())); else return NULL;};
-
 	void drawValidRegions(IplImage* src);
 	void drawDetected(IplImage* src);	
 
 	inline ObjectState* getObj() { return &(ballmodel->estimate); };
-	//bool seen() { return  this->balls.size()>0;};
 	
 	bool isSeen();
 
@@ -83,9 +77,11 @@ public:
 	void getGTBallRel( double &x, double &y );
 
 	BallModel 		*ballmodel;
-	kalman::MyKalman myKalman;
 
 private:
+
+	void predict_step();
+	void update_step();
 
 	void updateFromObservation();
 	void updateFromOdometry();
